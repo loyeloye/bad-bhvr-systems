@@ -1,0 +1,94 @@
+---
+import { SITE } from '../../lib/utils';
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="footer-inner">
+    <span class="tag">
+      Good businesses run on <b>Bad Behaviour.</b>
+    </span>
+    <nav aria-label="Footer navigation">
+      <a href="/services">Services</a>
+      <a href="/case-studies">Results</a>
+      <a href="/about">About</a>
+      <a href="/blog">Insights</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="footer-right">
+      <a href={SITE.whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      <a href={SITE.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <span>© {year} BAD BHVR SYSTEMS · LAGOS · ABU DHABI · LONDON</span>
+    <span>Bad Bhvr Systems is an AI, automation, and data consultancy. We rebuild how businesses operate.</span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--color-line);
+    padding: 3rem 4vw 2rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .tag {
+    font-family: var(--font-head);
+    color: var(--color-dgrey);
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+  }
+
+  .tag b {
+    color: var(--color-neon);
+    font-weight: 500;
+  }
+
+  footer nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  footer a {
+    color: var(--color-grey);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: var(--color-neon); }
+
+  .footer-right {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-legal {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--color-dgrey);
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .footer-legal { flex-direction: column; }
+  }
+</style>

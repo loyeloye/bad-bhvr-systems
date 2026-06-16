@@ -1,0 +1,310 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/forms/ContactForm.astro';
+
+const tools = [
+  'n8n', 'Zoho CRM', 'Microsoft Dynamics 365', 'Meta Ads',
+  'Google Analytics 4', 'Apify', 'OpenAI / GPT-4', 'Claude (Anthropic)',
+  'Google Workspace', 'Looker Studio', 'Power BI', 'WhatsApp Business API',
+];
+
+const values = [
+  {
+    title: 'We audit before we recommend.',
+    body: 'No proposal until we\'ve seen how your business actually works.',
+  },
+  {
+    title: 'We build the business case first.',
+    body: 'Every automation, integration, and dashboard comes with the math: hours saved, errors removed, revenue protected.',
+  },
+  {
+    title: 'We build in your stack.',
+    body: 'Tools you already pay for, accounts you own. No lock-in, no dependency on us.',
+  },
+  {
+    title: 'We hand over the keys.',
+    body: 'A system your team can\'t run without us is a system we built wrong.',
+  },
+];
+---
+
+<BaseLayout
+  title="About Bad Bhvr Systems — Why We Exist | Bad Bhvr Systems"
+  description="Bad Bhvr Systems is an AI, automation, and data consultancy founded in Lagos. 10+ years of rebuilding how businesses operate, from Nigeria to the US and UK."
+>
+  <!-- Hero -->
+  <section class="about-hero">
+    <div class="container">
+      <p class="eyebrow">About</p>
+      <h1>Named after the way we work.</h1>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="story-section">
+    <div class="container story-layout">
+      <div class="story-text reveal">
+        <h2>The story</h2>
+        <p>
+          "Best practice" is what everyone else is already doing. Follow it and the ceiling is average.
+        </p>
+        <p>
+          Bad Bhvr Systems was founded in Lagos on a different premise: the businesses that win the next decade are the ones willing to break their own habits — automate what's always been manual, hand work to AI that's always gone to overtime, and trust data over the loudest opinion in the room. In a traditional business culture, that's bad behaviour. It's also the only behaviour that compounds.
+        </p>
+        <p>
+          We've spent 10+ years inside operations across Nigeria, the US, and the UK — enterprise IT firms, mobility companies, career services, consumer brands. Same pattern everywhere: good people held back by how the business runs. We fix the how.
+        </p>
+      </div>
+      <div class="story-aside reveal">
+        <div class="photo-placeholder" aria-hidden="true">
+          <span>Photo</span>
+        </div>
+        <div class="quick-facts">
+          <div class="fact">
+            <span class="fact-num">10+</span>
+            <span class="fact-label">Years of experience</span>
+          </div>
+          <div class="fact">
+            <span class="fact-num">590%</span>
+            <span class="fact-label">ROI achieved for a client</span>
+          </div>
+          <div class="fact">
+            <span class="fact-num">5+</span>
+            <span class="fact-label">Active client partnerships</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="values-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="eyebrow">How we work</p>
+        <h2>Strong opinions, measurable results</h2>
+      </div>
+      <div class="values-grid">
+        {values.map((v, i) => (
+          <div class="value-card reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section class="clients-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="eyebrow">Who we've worked with</p>
+        <h2>Trusted by businesses that are building something real</h2>
+      </div>
+      <div class="clients-list reveal">
+        {['LincRide', 'TEPS', 'Reliance Infosystems', 'Solutions MGA', 'MrWins'].map(c => (
+          <div class="client-name">{c}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools -->
+  <section class="tools-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="eyebrow">The toolbox</p>
+        <h2>What we work with</h2>
+        <p class="section-sub">We're platform-agnostic. We recommend what fits, not what we're paid to sell.</p>
+      </div>
+      <div class="tools-grid reveal">
+        {tools.map(t => <span class="tool-pill">{t}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="about-cta">
+    <div class="container">
+      <div class="cta-layout reveal">
+        <div>
+          <h2>If your business runs on heroics and memory, we should talk.</h2>
+          <p>Book a working session. We'll look at one process in your business live — and tell you honestly what we'd change.</p>
+        </div>
+        <ContactForm compact={true} />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    font-size: 1.2rem;
+    color: var(--color-muted);
+    max-width: 600px;
+    margin-top: 1.5rem;
+    line-height: 1.75;
+  }
+
+  .story-section {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+    background: var(--color-surface);
+  }
+
+  .story-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .story-text h2 { margin-bottom: 1.5rem; }
+
+  .story-text p {
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .quick-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .fact {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background: var(--color-base);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  .fact-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .fact-label { font-size: 0.8rem; color: var(--color-muted); margin-top: 0.25rem; }
+
+  .values-section, .clients-section, .tools-section, .about-cta {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  .section-header { margin-bottom: 3rem; }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--color-muted);
+    margin-top: 0.75rem;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .value-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+  }
+
+  .value-card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+
+  .value-card p { color: var(--color-muted); font-size: 0.9rem; line-height: 1.75; }
+
+  .clients-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .client-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-muted);
+    padding: 0.75rem 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .client-name:hover { color: var(--color-text); border-color: var(--color-accent); }
+
+  .tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tool-pill {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1.1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-muted);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .tool-pill:hover { color: var(--color-text); border-color: var(--color-accent); }
+
+  .cta-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .cta-layout h2 { margin-bottom: 1rem; }
+  .cta-layout > div > p { color: var(--color-muted); line-height: 1.75; }
+
+  @media (max-width: 900px) {
+    .story-layout { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    .cta-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+</style>

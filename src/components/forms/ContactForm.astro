@@ -1,0 +1,247 @@
+---
+interface Props {
+  compact?: boolean;
+  subject?: string;
+}
+const { compact = false, subject = 'New inquiry from badbhvr.com' } = Astro.props;
+---
+
+<form
+  class:list={['contact-form', { 'contact-form-compact': compact }]}
+  id="contact-form"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  novalidate
+>
+  <!-- Web3Forms access key — replace with real key from web3forms.com -->
+  <input type="hidden" name="access_key" value="75d77d18-7292-4e02-8b84-543e07f76c70" />
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="redirect" value="https://badbhvr.com/thank-you" />
+  <!-- Honeypot -->
+  <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" />
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="name">Full Name <span aria-hidden="true">*</span></label>
+      <input type="text" id="name" name="name" placeholder="Adaeze Okonkwo" required autocomplete="name" />
+    </div>
+    <div class="form-group">
+      <label for="email">Work Email <span aria-hidden="true">*</span></label>
+      <input type="email" id="email" name="email" placeholder="ada@yourcompany.com" required autocomplete="email" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="company">Company</label>
+    <input type="text" id="company" name="company" placeholder="Your company name" autocomplete="organization" />
+  </div>
+
+  <div class="form-group">
+    <label for="need">What do you need help with? <span aria-hidden="true">*</span></label>
+    <select id="need" name="need" required>
+      <option value="" disabled selected>Select a service area</option>
+      <option value="automation">Process Automation</option>
+      <option value="ai">AI Integration</option>
+      <option value="data">Data & Business Intelligence</option>
+      <option value="crm">CRM Implementation</option>
+      <option value="whatsapp-leads">WhatsApp Lead Capture</option>
+      <option value="marketing">Marketing Automation / Meta Ads</option>
+      <option value="other">Other / Not sure yet</option>
+    </select>
+  </div>
+
+  {!compact && (
+    <div class="form-group">
+      <label for="budget">Approximate Budget (optional)</label>
+      <select id="budget" name="budget">
+        <option value="" disabled selected>Select a range</option>
+        <option value="under-500k">Under ₦500,000</option>
+        <option value="500k-2m">₦500,000 – ₦2,000,000</option>
+        <option value="2m-5m">₦2,000,000 – ₦5,000,000</option>
+        <option value="5m-plus">₦5,000,000+</option>
+        <option value="discuss">Prefer to discuss</option>
+      </select>
+    </div>
+  )}
+
+  <div class="form-group">
+    <label for="message">Tell us more <span aria-hidden="true">*</span></label>
+    <textarea
+      id="message"
+      name="message"
+      rows={compact ? 3 : 5}
+      placeholder="Brief description of your situation and what you're hoping to achieve..."
+      required
+    ></textarea>
+  </div>
+
+  <div class="form-footer">
+    <button type="submit" class="submit-btn" id="submit-btn">
+      <span class="btn-text">Send it</span>
+      <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+      <span class="btn-loading" aria-hidden="true">Sending…</span>
+    </button>
+    <p class="form-note">Within one business day. Usually faster.</p>
+  </div>
+
+  <div id="form-success" class="form-success" role="alert" aria-live="polite" hidden>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+    </svg>
+    Received. A human — not a bot — replies within one business day. If it's urgent, hit the WhatsApp button.
+  </div>
+</form>
+
+<style>
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  label span { color: var(--color-accent); }
+
+  input, select, textarea {
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    padding: 0.65rem 0.9rem;
+    width: 100%;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  input::placeholder, textarea::placeholder { color: var(--color-muted); }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  textarea { resize: vertical; min-height: 100px; }
+
+  .form-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-accent);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .submit-btn:hover { background: var(--color-accent-warm); transform: translateY(-1px); }
+
+  .btn-loading { display: none; }
+  .submit-btn.loading .btn-text,
+  .submit-btn.loading .btn-icon { display: none; }
+  .submit-btn.loading .btn-loading { display: inline; }
+
+  .form-note {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .form-success {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(37,211,102,0.1);
+    border: 1px solid rgba(37,211,102,0.25);
+    border-radius: var(--radius-sm);
+    color: #25D366;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.9rem 1.1rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const btn = document.getElementById('submit-btn');
+  const success = document.getElementById('form-success');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn?.classList.add('loading');
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data });
+      const json = await res.json();
+
+      if (json.success) {
+        form.style.display = 'none';
+        if (success) success.hidden = false;
+        // Fire GA4 event if loaded
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'form_submit', { event_category: 'contact' });
+        }
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch {
+      btn?.classList.remove('loading');
+      alert('Something went wrong. Please try again or WhatsApp us directly.');
+    }
+  });
+</script>

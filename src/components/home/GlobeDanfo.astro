@@ -1,0 +1,402 @@
+---
+// GlobeDanfo — Three.js globe with danfo bus animation
+// - Three.js bundled locally at /vendor/three.min.js
+// - GeoJSON bundled locally at /data/world.geo.json (no CDN fetch at runtime)
+// - Hidden below 1100px via CSS
+// - Skips animation when tab is hidden
+// - Static fallback when prefers-reduced-motion or WebGL unavailable
+---
+
+<div class="globe-wrap" aria-hidden="true">
+  <div id="globeWrap"></div>
+  <!-- Static fallback for reduced-motion / no WebGL -->
+  <div class="globe-fallback" aria-hidden="true">
+    <div class="globe-static">
+      <div class="static-label">LAGOS → ABU DHABI</div>
+      <div class="static-cities">
+        <span>LAGOS</span>
+        <span>ACCRA</span>
+        <span>KIGALI</span>
+        <span>NAIROBI</span>
+        <span>JHB</span>
+        <span>ABU DHABI</span>
+        <span>DUBAI</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .globe-wrap {
+    position: absolute;
+    right: 3vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: min(42vw, 580px);
+    pointer-events: none;
+  }
+
+  #globeWrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 74%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 74%);
+  }
+
+  .globe-fallback {
+    display: none;
+  }
+
+  /* Reduced-motion: show static, hide canvas */
+  @media (prefers-reduced-motion: reduce) {
+    #globeWrap { display: none; }
+    .globe-fallback { display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 1; }
+    .globe-static {
+      border: 1px solid var(--color-line);
+      border-radius: 50%;
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: var(--color-panel);
+    }
+    .static-label {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--color-neon);
+    }
+    .static-cities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 0 1.5rem;
+    }
+    .static-cities span {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--color-grey);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .globe-wrap { display: none; }
+  }
+</style>
+
+<script>
+(function () {
+  // Skip if reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const wrap = document.getElementById('globeWrap');
+  if (!wrap) return;
+
+  // Load Three.js from local vendor file, then GeoJSON, then init
+  const s = document.createElement('script');
+  s.src = '/vendor/three.min.js';
+  s.onload = () => initGlobe();
+  document.head.appendChild(s);
+
+  function initGlobe() {
+    if (!window.THREE || !wrap) return;
+    const THREE = window.THREE;
+
+    // Check WebGL support
+    try {
+      const testCanvas = document.createElement('canvas');
+      const gl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
+      if (!gl) return;
+    } catch (e) { return; }
+
+    // ── Scene ──────────────────────────────────────────────────
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 20);
+    camera.position.set(0, 0.3, 1.92);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    wrap.appendChild(renderer.domElement);
+
+    function resize() {
+      const s = wrap.clientWidth;
+      renderer.setSize(s, s);
+      camera.aspect = 1;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+    const dl = new THREE.DirectionalLight(0xffffff, 0.9);
+    dl.position.set(2, 3, 4);
+    scene.add(dl);
+
+    const earth = new THREE.Group();
+    scene.add(earth);
+
+    // Dark sphere (hides far-side lines)
+    earth.add(new THREE.Mesh(
+      new THREE.SphereGeometry(0.992, 64, 64),
+      new THREE.MeshStandardMaterial({ color: 0x0E0E0E, roughness: 0.95, metalness: 0 })
+    ));
+
+    // Atmosphere rim
+    const rim = new THREE.Mesh(
+      new THREE.SphereGeometry(1.015, 64, 64),
+      new THREE.MeshBasicMaterial({ color: 0xE8FF2A, transparent: true, opacity: 0.025, side: THREE.BackSide })
+    );
+    scene.add(rim);
+
+    // Lat/lon → 3D
+    const ll = (lat, lon, r) => {
+      const p = lat * Math.PI / 180, l = lon * Math.PI / 180;
+      return new THREE.Vector3(r * Math.cos(p) * Math.cos(l), r * Math.sin(p), -r * Math.cos(p) * Math.sin(l));
+    };
+
+    // ── Accent-aware materials ─────────────────────────────────
+    const accent = '#E8FF2A';
+    const hiMat  = new THREE.LineBasicMaterial({ color: new THREE.Color(accent) });
+    const arcMat = new THREE.LineBasicMaterial({ color: new THREE.Color(accent), transparent: true, opacity: 0.45 });
+    const dotMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(accent) });
+    const fillMat = new THREE.MeshBasicMaterial({
+      color: new THREE.Color(accent), transparent: true, opacity: 0.14,
+      side: THREE.DoubleSide, depthWrite: false
+    });
+    const baseMat = new THREE.LineBasicMaterial({ color: 0x3C3C38, transparent: true, opacity: 0.6 });
+
+    // ── Load GeoJSON (local) ───────────────────────────────────
+    const HI = new Set(['NGA', 'GHA', 'RWA', 'KEN', 'ZAF', 'ARE']);
+
+    function ring(coords, r, mat) {
+      const pts = coords.map(c => ll(c[1], c[0], r));
+      const g = new THREE.BufferGeometry().setFromPoints(pts);
+      earth.add(new THREE.LineLoop(g, mat));
+    }
+
+    fetch('/data/world.geo.json')
+      .then(r => r.json())
+      .then(geo => {
+        geo.features.forEach(f => {
+          const hi = HI.has(f.id);
+          const polys = f.geometry.type === 'Polygon'
+            ? [f.geometry.coordinates]
+            : f.geometry.coordinates;
+          polys.forEach(poly => poly.forEach((rg, ri) => {
+            if (rg.length < 4) return;
+            const step = hi ? 1 : Math.ceil(rg.length / 200) || 1;
+            ring(rg.filter((_, i) => i % step === 0), hi ? 1.004 : 1.001, hi ? hiMat : baseMat);
+            if (hi && ri === 0) {
+              const shape = new THREE.Shape(rg.map(c => new THREE.Vector2(c[0], c[1])));
+              const g = new THREE.ShapeGeometry(shape);
+              const p = g.attributes.position;
+              for (let i = 0; i < p.count; i++) {
+                const v = ll(p.getY(i), p.getX(i), 1.0025);
+                p.setXYZ(i, v.x, v.y, v.z);
+              }
+              g.computeVertexNormals();
+              earth.add(new THREE.Mesh(g, fillMat));
+            }
+          }));
+        });
+      })
+      .catch(() => {});
+
+    // ── City stops ─────────────────────────────────────────────
+    const stops = [
+      ['LAGOS',        6.45,   3.40],
+      ['ACCRA',        5.60,  -0.19],
+      ['KIGALI',      -1.95,  30.06],
+      ['NAIROBI',     -1.29,  36.82],
+      ['JOHANNESBURG',-26.20, 28.05],
+      ['ABU DHABI',   24.45,  54.38],
+      ['DUBAI',       25.20,  55.27],
+    ];
+
+    function makeLabel(text) {
+      const cv = document.createElement('canvas');
+      cv.width = 512; cv.height = 96;
+      const ctx = cv.getContext('2d');
+      ctx.font = '600 44px "Space Grotesk", Archivo, sans-serif';
+      ctx.fillStyle = 'rgba(245,245,243,.92)';
+      ctx.textAlign = 'center';
+      ctx.letterSpacing = '6px';
+      ctx.fillText(text, 256, 62);
+      const sp = new THREE.Sprite(
+        new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, depthTest: true })
+      );
+      sp.scale.set(0.3, 0.056, 1);
+      return sp;
+    }
+
+    const stopVecs = stops.map(s => ll(s[1], s[2], 1));
+    stops.forEach((s, i) => {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.013, 12, 12), dotMat);
+      m.position.copy(stopVecs[i].clone().multiplyScalar(1.006));
+      earth.add(m);
+      const lb = makeLabel(s[0]);
+      lb.position.copy(stopVecs[i].clone().multiplyScalar(1.1));
+      earth.add(lb);
+    });
+
+    // ── Great-circle slerp ─────────────────────────────────────
+    function slerpV(a, b, t) {
+      const th = a.angleTo(b);
+      if (th < 1e-6) return a.clone();
+      const sinTh = Math.sin(th);
+      return a.clone().multiplyScalar(Math.sin((1 - t) * th) / sinTh)
+              .add(b.clone().multiplyScalar(Math.sin(t * th) / sinTh));
+    }
+
+    // ── Danfo bus (flat-nose VW T3 style — always #F7C600) ─────
+    const bus = new THREE.Group();
+    const yellow   = new THREE.MeshStandardMaterial({ color: 0xF7C600, roughness: 0.5 });
+    const yellowD  = new THREE.MeshStandardMaterial({ color: 0xDFAF00, roughness: 0.55 });
+    const black    = new THREE.MeshStandardMaterial({ color: 0x0A0A0A, roughness: 0.7 });
+    const glass    = new THREE.MeshStandardMaterial({ color: 0x0E161A, roughness: 0.15, metalness: 0.6 });
+
+    // Body
+    const body = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.105, 0.105), yellow);
+    body.position.set(0, 0.0775, 0); bus.add(body);
+
+    // Windshield
+    const ws = new THREE.Mesh(new THREE.BoxGeometry(0.005, 0.046, 0.09), glass);
+    ws.position.set(0.1205, 0.103, 0); bus.add(ws);
+    const wsBar = new THREE.Mesh(new THREE.BoxGeometry(0.007, 0.046, 0.006), yellow);
+    wsBar.position.set(0.121, 0.103, 0); bus.add(wsBar);
+
+    // Front details
+    const grille = new THREE.Mesh(new THREE.BoxGeometry(0.005, 0.02, 0.07), black);
+    grille.position.set(0.1205, 0.052, 0); bus.add(grille);
+    [[0.0345], [-0.0345]].forEach(([z]) => {
+      const hl = new THREE.Mesh(new THREE.SphereGeometry(0.009, 10, 10),
+        new THREE.MeshBasicMaterial({ color: 0xFFFDE0 }));
+      hl.position.set(0.122, 0.072, z); bus.add(hl);
+    });
+    const bf = new THREE.Mesh(new THREE.BoxGeometry(0.014, 0.016, 0.11), black);
+    bf.position.set(0.122, 0.03, 0); bus.add(bf);
+    const bb = bf.clone(); bb.position.x = -0.122; bus.add(bb);
+
+    // Tail lights
+    [[-0.124, 0.07, 0.034], [-0.124, 0.07, -0.034]].forEach(([x, y, z]) => {
+      const tl = new THREE.Mesh(new THREE.SphereGeometry(0.006, 8, 8),
+        new THREE.MeshBasicMaterial({ color: 0xFF4433 }));
+      tl.position.set(x, y, z); bus.add(tl);
+    });
+
+    // Window bands both sides
+    [-0.0535, 0.0535].forEach(z => {
+      const trim = new THREE.Mesh(new THREE.BoxGeometry(0.21, 0.042, 0.003), black);
+      trim.position.set(-0.002, 0.106, z); bus.add(trim);
+      const band = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.034, 0.004), glass);
+      band.position.set(-0.002, 0.106, z > 0 ? z + 0.002 : z - 0.002); bus.add(band);
+      [-0.06, -0.005, 0.05].forEach(px => {
+        const pil = new THREE.Mesh(new THREE.BoxGeometry(0.006, 0.036, 0.006), yellow);
+        pil.position.set(px, 0.106, z > 0 ? z + 0.002 : z - 0.002); bus.add(pil);
+      });
+      const hd = new THREE.Mesh(new THREE.BoxGeometry(0.022, 0.004, 0.003), black);
+      hd.position.set(0.085, 0.078, z > 0 ? z + 0.0035 : z - 0.0035); bus.add(hd);
+    });
+
+    // Rear window
+    const rw = new THREE.Mesh(new THREE.BoxGeometry(0.005, 0.038, 0.078), glass);
+    rw.position.set(-0.1205, 0.105, 0); bus.add(rw);
+
+    // Rear vents
+    [-0.0545, 0.0545].forEach(z => {
+      for (let i = 0; i < 4; i++) {
+        const slat = new THREE.Mesh(new THREE.BoxGeometry(0.014, 0.003, 0.002), black);
+        slat.position.set(-0.102, 0.114 - i * 0.007, z); bus.add(slat);
+      }
+    });
+
+    // Single black stripe
+    [-0.054, 0.054].forEach(z => {
+      const st = new THREE.Mesh(new THREE.BoxGeometry(0.242, 0.009, 0.004), black);
+      st.position.set(0, 0.066, z); bus.add(st);
+    });
+    const stF = new THREE.Mesh(new THREE.BoxGeometry(0.004, 0.009, 0.108), black);
+    stF.position.set(0.121, 0.066, 0); bus.add(stF);
+    const stB = stF.clone(); stB.position.x = -0.121; bus.add(stB);
+
+    // Roof
+    const roofM = new THREE.Mesh(new THREE.BoxGeometry(0.235, 0.007, 0.1), yellow);
+    roofM.position.set(0, 0.133, 0); bus.add(roofM);
+
+    // Side mirrors
+    [[0.118, 0.1, 0.058], [0.118, 0.1, -0.058]].forEach(([x, y, z]) => {
+      const mr = new THREE.Mesh(new THREE.BoxGeometry(0.004, 0.014, 0.01), black);
+      mr.position.set(x, y, z); bus.add(mr);
+    });
+
+    // Wheels
+    [[0.078, 0.056], [0.078, -0.056], [-0.078, 0.056], [-0.078, -0.056]].forEach(([x, z]) => {
+      const w = new THREE.Mesh(new THREE.CylinderGeometry(0.027, 0.027, 0.016, 20), black);
+      w.rotation.x = Math.PI / 2; w.position.set(x, 0.027, z); bus.add(w);
+      const rim2 = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.017, 16),
+        new THREE.MeshStandardMaterial({ color: 0xB8B8B8, roughness: 0.4, metalness: 0.5 }));
+      rim2.rotation.x = Math.PI / 2; rim2.position.set(x, 0.027, z); bus.add(rim2);
+      const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.005, 0.005, 0.018, 10),
+        new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.5 }));
+      hub.rotation.x = Math.PI / 2; hub.position.set(x, 0.027, z); bus.add(hub);
+    });
+
+    bus.scale.setScalar(0.78);
+    earth.add(bus);
+
+    // ── Animation loop ─────────────────────────────────────────
+    const DWELL = 2.2, TRAVEL = 3.0, LEG = DWELL + TRAVEL;
+    const CYCLE = LEG * stops.length;
+    const ease  = t => t * t * (3 - 2 * t);
+    const fwd   = new THREE.Vector3(0, 0.18, 1).normalize();
+    const q     = new THREE.Quaternion();
+    const up    = new THREE.Vector3();
+    const fw    = new THREE.Vector3();
+    const sd    = new THREE.Vector3();
+    const m4    = new THREE.Matrix4();
+    let start   = performance.now();
+    let rafId: number;
+    let hidden  = false;
+
+    document.addEventListener('visibilitychange', () => { hidden = document.hidden; });
+
+    function tick(now: number) {
+      rafId = requestAnimationFrame(tick);
+      if (hidden) return;
+
+      const t    = ((now - start) / 1000) % CYCLE;
+      const leg  = Math.floor(t / LEG);
+      const ph   = t % LEG;
+      const a    = stopVecs[leg];
+      const b    = stopVecs[(leg + 1) % stopVecs.length];
+      const tt   = ph < DWELL ? 0 : ease((ph - DWELL) / TRAVEL);
+      const pos  = slerpV(a, b, tt);
+      const ahead = slerpV(a, b, Math.min(tt + 0.012, 1));
+
+      up.copy(pos).normalize();
+      fw.copy(ahead).sub(pos);
+      fw.addScaledVector(up, -fw.dot(up));
+      if (fw.lengthSq() < 1e-10) {
+        fw.copy(b).sub(a).addScaledVector(up, -b.clone().sub(a).dot(up));
+      }
+      fw.normalize();
+      sd.crossVectors(fw, up).normalize();
+      m4.makeBasis(fw, up, sd);
+      bus.quaternion.setFromRotationMatrix(m4);
+      bus.position.copy(pos).multiplyScalar(1.004);
+
+      q.setFromUnitVectors(pos.clone().normalize(), fwd);
+      earth.quaternion.slerp(q, 0.045);
+
+      renderer.render(scene, camera);
+    }
+
+    requestAnimationFrame(tick);
+  }
+})();
+</script>

@@ -1,0 +1,9 @@
+{
+  "clients": [
+    { "name": "LincRide", "slug": "lincride" },
+    { "name": "TEPS", "slug": "teps" },
+    { "name": "Reliance Infosystems", "slug": "reliance" },
+    { "name": "Solutions MGA", "slug": "solutions-mga" },
+    { "name": "MrWins", "slug": "mrwins" }
+  ]
+}

@@ -1,0 +1,135 @@
+---
+import '../styles/global.css';
+import SEO from '../components/layout/SEO.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+  noindex?: boolean;
+}
+
+const { title, description, image, article, noindex } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- Fonts: Space Grotesk (headlines) + Archivo (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <SEO title={title} description={description} image={image} article={article} noindex={noindex} />
+  <slot name="head" />
+
+  <!-- GA4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
+  <!-- JSON-LD: Organization (site-wide) -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Bad Bhvr Systems",
+    "url": "https://badbhvr.com",
+    "logo": "https://badbhvr.com/images/logo.png",
+    "sameAs": [
+      "https://www.linkedin.com/company/bad-bhvr-systems",
+      "https://twitter.com/badbhvr"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+2348106981030",
+      "contactType": "customer service",
+      "availableLanguage": "English",
+      "areaServed": ["NG", "GH", "KE", "ZA", "AE", "GB", "US", "GB"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lagos",
+      "addressCountry": "NG"
+    },
+    "description": "AI, automation, and data consultancy. We rebuild how businesses operate — from Lagos to Abu Dhabi."
+  })} />
+
+  <!-- JSON-LD: WebSite + Sitelinks searchbox -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Bad Bhvr Systems",
+    "url": "https://badbhvr.com"
+  })} />
+</head>
+<body>
+  <Header />
+  <main id="main-content" tabindex="-1">
+    <slot />
+  </main>
+  <Footer />
+  <WhatsAppButton />
+
+  <!-- Scroll reveal + counter observer -->
+  <script>
+    // Reveal
+    const revealObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            revealObs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    document.querySelectorAll('.fade, .reveal').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.92) {
+        el.classList.add('visible');
+      } else {
+        revealObs.observe(el);
+      }
+    });
+
+    // Counter animation
+    const counterObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          counterObs.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          const end = +(el.dataset.count ?? 0);
+          const suffix = el.dataset.suffix ?? '';
+          let t0: number | null = null;
+          const tick = (ts: number) => {
+            if (!t0) t0 = ts;
+            const p = Math.min((ts - t0) / 1400, 1);
+            el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+  </script>
+</body>
+</html>

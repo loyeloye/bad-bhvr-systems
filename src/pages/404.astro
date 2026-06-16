@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Page Not Found" noindex={true}>
+  <section class="not-found">
+    <div class="container">
+      <p class="four">404</p>
+      <h1>This page doesn't exist. Yet.</h1>
+      <p>Either the link is broken or we automated it out of existence. Head back home, or tell us what you were looking for.</p>
+      <div class="nf-links">
+        <a href="/" class="btn-accent">Back to Home</a>
+        <a href="/contact" class="btn-ghost">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .container { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+
+  .four {
+    font-family: var(--font-display);
+    font-size: 8rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+    opacity: 0.25;
+  }
+
+  h1 { margin-top: -2rem; }
+
+  p { color: var(--color-muted); font-size: 1.1rem; }
+
+  .nf-links { display: flex; gap: 1rem; margin-top: 1rem; }
+
+  .btn-accent {
+    background: var(--color-accent);
+    color: white;
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+  }
+
+  .btn-accent:hover { background: var(--color-accent-warm); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text);
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: var(--color-muted); }
+</style>

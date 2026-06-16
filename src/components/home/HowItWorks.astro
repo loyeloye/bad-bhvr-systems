@@ -1,0 +1,97 @@
+---
+const steps = [
+  {
+    sn: '/01',
+    title: 'Audit.',
+    body: 'We sit inside your operation for days, not minutes. We map every process, every tool, every leak.',
+  },
+  {
+    sn: '/02',
+    title: 'Design.',
+    body: 'You get a blueprint of what to automate, where AI pays, and what to measure — with the business case for each.',
+  },
+  {
+    sn: '/03',
+    title: 'Build.',
+    body: 'We implement it: workflows, integrations, dashboards, CRM. Real systems in your real stack.',
+  },
+  {
+    sn: '/04',
+    title: 'Optimize.',
+    body: "We measure what changed, tune what didn't, and hand your team the keys.",
+  },
+];
+---
+
+<section class="how-section" aria-labelledby="how-heading">
+  <div class="how-header fade">
+    <span class="eyebrow">How We Work</span>
+    <h2 id="how-heading">Four steps. No mystery.</h2>
+  </div>
+
+  <div class="steps">
+    {steps.map(s => (
+      <div class="step fade">
+        <span class="sn">{s.sn}</span>
+        <h3>{s.title}</h3>
+        <p>{s.body}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .how-section {
+    padding: 7.5rem 4vw;
+  }
+
+  .how-header {
+    margin-bottom: 4rem;
+  }
+
+  .steps {
+    counter-reset: step;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 120px 1fr 2fr;
+    gap: 2.5rem;
+    align-items: baseline;
+    padding: 2.4rem 0;
+    border-top: 1px solid var(--color-line);
+    transition: padding-left 0.35s;
+  }
+
+  .step:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .step:hover {
+    padding-left: 1.2rem;
+  }
+
+  .sn {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    color: var(--color-neon);
+  }
+
+  .step h3 {
+    font-family: var(--font-head);
+    font-size: clamp(1.3rem, 2.4vw, 2rem);
+  }
+
+  .step p {
+    color: var(--color-grey);
+    line-height: 1.65;
+    font-size: 0.97rem;
+  }
+
+  @media (max-width: 900px) {
+    .step {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+  }
+</style>

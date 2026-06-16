@@ -1,0 +1,266 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/forms/ContactForm.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map(s => ({
+    params: { slug: s.data.slug },
+    props: { service: s },
+  }));
+}
+
+const { service } = Astro.props;
+const { Content } = await render(service);
+const d = service.data;
+---
+
+<BaseLayout
+  title={d.metaTitle ?? `${d.title} | Bad Bhvr Systems`}
+  description={d.metaDescription ?? d.problem}
+>
+  <article>
+    <header class="service-header">
+      <div class="container">
+        <a href="/services" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          All Services
+        </a>
+        <p class="eyebrow">Service</p>
+        <h1>{d.title}</h1>
+        <p class="service-tagline">"{d.tagline}"</p>
+      </div>
+    </header>
+
+    <div class="service-body">
+      <div class="container service-layout">
+        <div class="service-content">
+          <Content />
+        </div>
+        <aside class="service-sidebar">
+          <!-- Outcomes -->
+          <div class="sidebar-card">
+            <h3>What you'll get</h3>
+            <ul>
+              {d.outcomes.map(o => (
+                <li>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  {o}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <!-- Tools -->
+          <div class="sidebar-card">
+            <h3>Tools we use</h3>
+            <div class="tools-list">
+              {d.tools.map(t => <span class="tool-tag">{t}</span>)}
+            </div>
+          </div>
+          <!-- CTA -->
+          <div class="sidebar-cta">
+            <p>Ready to get started?</p>
+            <a href="/contact" class="btn-accent">Book a Free Audit</a>
+            <a href="/whatsapp-leads" class="wa-link" target="_blank" rel="noopener noreferrer">
+              Or chat on WhatsApp →
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Contact form -->
+    <section class="service-form-section">
+      <div class="container">
+        <div class="form-wrapper">
+          <div>
+            <h2>Start a conversation</h2>
+            <p>Describe where you're at and what you're trying to achieve. We'll come back with honest advice on where to begin.</p>
+          </div>
+          <ContactForm compact={true} subject={`Inquiry: ${d.title}`} />
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .service-header {
+    padding-top: 9rem;
+    padding-bottom: 4rem;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--color-text); }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .service-tagline {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+    font-style: italic;
+    margin-top: 1rem;
+    max-width: 600px;
+  }
+
+  .service-body {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .service-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .service-content {
+    color: var(--color-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .service-content :global(h2) {
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-content :global(p) { margin-bottom: 1rem; }
+
+  .service-content :global(ul) {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-content :global(li) { margin-bottom: 0.4rem; }
+
+  .service-content :global(strong) { color: var(--color-text); }
+
+  .sidebar-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .sidebar-card h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-card ul { list-style: none; }
+
+  .sidebar-card li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    margin-bottom: 0.6rem;
+  }
+
+  .sidebar-card li svg { color: var(--color-accent); flex-shrink: 0; margin-top: 2px; }
+
+  .tools-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tool-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--color-surface-2);
+    color: var(--color-muted);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+
+  .sidebar-cta {
+    background: rgba(232,83,26,0.06);
+    border: 1px solid rgba(232,83,26,0.2);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .sidebar-cta p { font-weight: 600; color: var(--color-text); font-size: 0.9rem; }
+
+  .btn-accent {
+    display: inline-flex;
+    background: var(--color-accent);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+  }
+
+  .btn-accent:hover { background: var(--color-accent-warm); }
+
+  .wa-link {
+    font-size: 0.825rem;
+    color: #25D366;
+    font-weight: 500;
+  }
+
+  .service-form-section {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: 5rem 0;
+  }
+
+  .form-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .form-wrapper h2 { margin-bottom: 1rem; }
+  .form-wrapper > div > p { color: var(--color-muted); line-height: 1.75; }
+
+  @media (max-width: 900px) {
+    .service-layout { grid-template-columns: 1fr; }
+    .form-wrapper { grid-template-columns: 1fr; }
+    .service-sidebar { order: -1; }
+  }
+</style>

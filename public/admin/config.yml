@@ -1,0 +1,379 @@
+# ─── Backend ──────────────────────────────────────────────────────────────────
+# PRODUCTION: GitHub backend — commits edits directly to your repo.
+# Replace "your-github-username/bad-bhvr-systems" with your actual repo path.
+# You also need a GitHub OAuth app — see README for setup steps.
+backend:
+  name: github
+  repo: loyeloye/bad-bhvr-systems
+  branch: main
+
+# LOCAL DEVELOPMENT: enable local editing without GitHub.
+# Run: npm run dev:cms  (starts both Astro + the CMS proxy in one command)
+# Then open: http://localhost:4321/admin
+local_backend: true
+
+# ─── Media ────────────────────────────────────────────────────────────────────
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+# ─── Editor settings ──────────────────────────────────────────────────────────
+editor:
+  preview: false
+
+# ─── Collections ──────────────────────────────────────────────────────────────
+collections:
+
+  # ── Blog Posts ───────────────────────────────────────────────────────────────
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: src/content/blog
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}} — {{publishDate}}"
+    sortable_fields: [publishDate, title]
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        hint: "Keep under 70 characters for SEO."
+
+      - label: Excerpt
+        name: excerpt
+        widget: text
+        hint: "1–2 sentence summary. Used in blog index and meta description."
+
+      - label: Publish Date
+        name: publishDate
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+        default: "{{now}}"
+
+      - label: Author
+        name: author
+        widget: string
+        default: "Bad Bhvr Systems"
+
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - Automation
+          - AI Integration
+          - Data & BI
+          - CRM
+          - Marketing
+          - Business Strategy
+
+      - label: Tags
+        name: tags
+        widget: list
+        default: []
+        hint: "Comma-separated tags, e.g. WhatsApp, CRM, Nigeria"
+
+      - label: Featured
+        name: featured
+        widget: boolean
+        default: false
+        hint: "Show this post prominently on the blog index."
+
+      - label: Meta Title
+        name: metaTitle
+        widget: string
+        required: false
+        hint: "Optional. Leave blank to auto-generate from post title."
+
+      - label: Meta Description
+        name: metaDescription
+        widget: text
+        required: false
+        hint: "Optional. Leave blank to use the excerpt."
+
+      - label: Body
+        name: body
+        widget: markdown
+
+  # ── Case Studies ─────────────────────────────────────────────────────────────
+  - name: caseStudies
+    label: Case Studies
+    label_singular: Case Study
+    folder: src/content/case-studies
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{client}} — {{resultMetric}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        hint: "Descriptive title for the case study, e.g. 'How LincRide Achieved 590% ROI'"
+
+      - label: Client Name
+        name: client
+        widget: string
+        hint: "Company name as it should appear publicly."
+
+      - label: Industry
+        name: industry
+        widget: string
+        hint: "e.g. Ride-hailing, Financial Services, E-commerce"
+
+      - label: Problem (summary)
+        name: problem
+        widget: text
+        hint: "One paragraph. What was the client struggling with before engaging you?"
+
+      - label: Result Label
+        name: result
+        widget: string
+        hint: "Short label for the main metric, e.g. 'Return on ad spend'"
+
+      - label: Result Metric
+        name: resultMetric
+        widget: string
+        hint: "The headline number, e.g. '590% ROI' or '40 hrs saved/week'"
+
+      - label: Tools Used
+        name: tools
+        widget: list
+        hint: "Tools and platforms used, e.g. Zoho CRM, n8n, Meta Ads"
+
+      - label: Featured
+        name: featured
+        widget: boolean
+        default: false
+        hint: "Show on the home page as the featured case study."
+
+      - label: Publish Date
+        name: publishDate
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+
+      - label: Meta Title
+        name: metaTitle
+        widget: string
+        required: false
+
+      - label: Meta Description
+        name: metaDescription
+        widget: text
+        required: false
+
+      - label: Body
+        name: body
+        widget: markdown
+        hint: "Full case study content. Use headings: The Situation, What We Did, The Results, Tools Used."
+
+  # ── Services ─────────────────────────────────────────────────────────────────
+  - name: services
+    label: Services
+    label_singular: Service
+    folder: src/content/services
+    create: false
+    delete: false
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+
+      - label: URL Slug
+        name: slug
+        widget: string
+        hint: "URL path, e.g. 'automation'. Do not change unless you know what you're doing."
+
+      - label: Tagline
+        name: tagline
+        widget: string
+        hint: "One punchy sentence that describes this service."
+
+      - label: Icon
+        name: icon
+        widget: hidden
+
+      - label: Display Order
+        name: order
+        widget: number
+        hint: "1 = shown first. Controls the order on the Services overview page."
+
+      - label: Problem Statement
+        name: problem
+        widget: text
+        hint: "What problem does this service solve? 2–3 sentences."
+
+      - label: Outcomes
+        name: outcomes
+        widget: list
+        hint: "Bullet-point outcomes the client gets. 4–6 items."
+
+      - label: Tools
+        name: tools
+        widget: list
+        hint: "Tools and platforms used for this service."
+
+      - label: Meta Title
+        name: metaTitle
+        widget: string
+        required: false
+
+      - label: Meta Description
+        name: metaDescription
+        widget: text
+        required: false
+
+      - label: Body
+        name: body
+        widget: markdown
+        hint: "Full service page content."
+
+  # ── Site Settings ─────────────────────────────────────────────────────────────
+  - name: settings
+    label: Site Settings
+    files:
+      - label: General Settings
+        name: general
+        file: src/content/settings/general.json
+        fields:
+          - label: Business Name
+            name: businessName
+            widget: string
+            default: "Bad Bhvr Systems"
+
+          - label: Tagline
+            name: tagline
+            widget: string
+
+          - label: Contact Email
+            name: email
+            widget: string
+
+          - label: WhatsApp Number
+            name: whatsapp
+            widget: string
+            hint: "Include country code, e.g. +2348106981030"
+
+          - label: Twitter / X URL
+            name: twitter
+            widget: string
+            required: false
+
+          - label: LinkedIn URL
+            name: linkedin
+            widget: string
+            required: false
+
+          - label: Instagram URL
+            name: instagram
+            widget: string
+            required: false
+
+      - label: Home Page — Hero
+        name: hero
+        file: src/content/settings/hero.json
+        fields:
+          - label: Headline
+            name: headline
+            widget: string
+            hint: "The main hero headline."
+
+          - label: Sub Text
+            name: subtext
+            widget: text
+            hint: "The paragraph below the headline."
+
+          - label: Primary CTA Label
+            name: ctaPrimary
+            widget: string
+            default: "Book a Free Audit"
+
+          - label: Secondary CTA Label
+            name: ctaSecondary
+            widget: string
+            default: "WhatsApp Us"
+
+          - label: Stat 1 Label
+            name: stat1Label
+            widget: string
+            default: "Automation"
+
+          - label: Stat 1 Value
+            name: stat1Value
+            widget: string
+            default: "Save 20+ hrs/week"
+
+          - label: Stat 2 Label
+            name: stat2Label
+            widget: string
+            default: "Campaign ROI"
+
+          - label: Stat 2 Value
+            name: stat2Value
+            widget: string
+            default: "590%"
+
+          - label: Stat 3 Label
+            name: stat3Label
+            widget: string
+            default: "Impressions Managed"
+
+          - label: Stat 3 Value
+            name: stat3Value
+            widget: string
+            default: "7M+"
+
+          - label: Stat 4 Label
+            name: stat4Label
+            widget: string
+            default: "Experience"
+
+          - label: Stat 4 Value
+            name: stat4Value
+            widget: string
+            default: "10+ Years"
+
+      - label: Home Page — Results Band
+        name: results
+        file: src/content/settings/results.json
+        fields:
+          - label: Results
+            name: results
+            widget: list
+            fields:
+              - label: Metric
+                name: metric
+                widget: string
+                hint: "e.g. 590%"
+              - label: Label
+                name: label
+                widget: string
+                hint: "e.g. ROI on managed campaign"
+              - label: Sub Label
+                name: sub
+                widget: string
+                hint: "e.g. Meta Ads + automation"
+
+      - label: Client Logos
+        name: clients
+        file: src/content/settings/clients.json
+        fields:
+          - label: Clients
+            name: clients
+            widget: list
+            fields:
+              - label: Name
+                name: name
+                widget: string
+              - label: Logo Filename
+                name: slug
+                widget: string
+                hint: "Filename without extension, e.g. 'lincride' for lincride.svg"

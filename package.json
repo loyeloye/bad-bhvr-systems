@@ -1,0 +1,27 @@
+{
+  "name": "bad-bhvr-systems",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "dev:cms": "npx concurrently \"astro dev\" \"npx decap-server\"",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.2",
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.4.4",
+    "tailwindcss": "^4.3.0",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "decap-server": "^3.9.0"
+  }
+}

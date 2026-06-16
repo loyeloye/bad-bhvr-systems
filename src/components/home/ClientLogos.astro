@@ -1,0 +1,56 @@
+---
+const clients = ['LINCRIDE', 'TEPS', 'RELIANCE INFOSYSTEMS', 'SOLUTIONS MGA', 'MRWINS'];
+// Duplicate for seamless loop
+const track = [...clients, ...clients];
+---
+
+<div class="marquee" aria-label="Clients we've worked with">
+  <div class="marquee-track" aria-hidden="true">
+    {track.map(name => (
+      <span>{name}</span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    padding: 1.6rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 5rem;
+    width: max-content;
+    animation: marquee-scroll 28s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-track span {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    color: var(--color-dgrey);
+    letter-spacing: 0.18em;
+    white-space: nowrap;
+    transition: color 0.3s;
+    cursor: default;
+  }
+
+  .marquee-track span:hover {
+    color: var(--color-neon);
+  }
+
+  @keyframes marquee-scroll {
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  tight?: boolean;
+  dark?: boolean;
+}
+
+const { id, class: className, tight = false, dark = false } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={['section', { 'section-tight': tight, 'section-dark': dark }, className]}
+>
+  <div class="container">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  .section-tight {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .section-dark {
+    background: var(--color-surface);
+  }
+</style>

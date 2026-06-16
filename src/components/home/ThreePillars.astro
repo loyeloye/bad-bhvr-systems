@@ -1,0 +1,129 @@
+---
+const pillars = [
+  {
+    number: '01',
+    title: 'Automate the work',
+    body: 'Your best people spend hours moving data between apps and chasing follow-ups. We map those processes and make them run themselves — so your team does the work only humans can do.',
+    href: '/services/automation',
+    cta: 'Process Automation →',
+  },
+  {
+    number: '02',
+    title: 'Put AI to work',
+    body: 'Not AI for the press release. AI that answers customers in minutes, qualifies leads before a human touches them, and drafts the documents your team rewrites every week.',
+    href: '/services/ai',
+    cta: 'AI Integration →',
+  },
+  {
+    number: '03',
+    title: 'Decide with data',
+    body: 'Your CRM says one thing, your ads dashboard another, your bank account a third. We connect them into one view — so every decision starts with a number, not a feeling.',
+    href: '/services/data',
+    cta: 'Data & Intelligence →',
+  },
+];
+---
+
+<section class="pillars-section" aria-labelledby="pillars-heading">
+  <div class="pillars-intro fade">
+    <span class="eyebrow">What We Do</span>
+    <h2 id="pillars-heading">Most companies don't have a growth problem. They have an operating problem.</h2>
+  </div>
+
+  <div class="pillars fade">
+    {pillars.map(p => (
+      <div class="pillar">
+        <span class="num">{p.number}</span>
+        <h3>{p.title}</h3>
+        <p>{p.body}</p>
+        <a class="pillar-link" href={p.href}>{p.cta}</a>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .pillars-section {
+    padding: 7.5rem 4vw;
+  }
+
+  .pillars-intro {
+    max-width: 600px;
+    margin-bottom: 4rem;
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-line);
+    border: 1px solid var(--color-line);
+  }
+
+  .pillar {
+    background: var(--color-ink);
+    padding: 3rem 2.2rem 2.6rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.35s;
+    cursor: pointer;
+  }
+
+  /* Neon top-edge bar scales in on hover */
+  .pillar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--color-neon);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .pillar:hover { background: var(--color-panel); }
+  .pillar:hover::before { transform: scaleX(1); }
+
+  .num {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    color: var(--color-dgrey);
+    letter-spacing: 0.2em;
+  }
+
+  .pillar h3 {
+    font-size: 1.5rem;
+    margin: 1.4rem 0 1rem;
+    transition: color 0.3s;
+  }
+
+  .pillar:hover h3 { color: var(--color-neon); }
+
+  .pillar p {
+    color: var(--color-grey);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .pillar-link {
+    margin-top: 1.8rem;
+    display: inline-block;
+    font-size: 0.82rem;
+    color: var(--color-white);
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 0.25rem;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .pillar:hover .pillar-link {
+    border-color: var(--color-neon);
+    color: var(--color-neon);
+  }
+
+  @media (max-width: 900px) {
+    .pillars { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+const stats = [
+  { count: 590, suffix: '%', label: 'ROI on a single managed campaign' },
+  { count: 7,   suffix: 'M+', label: 'Impressions delivered on one program' },
+  { count: 10,  suffix: '+', label: 'Years rebuilding operations, NG · US · UK' },
+];
+---
+
+<section class="stats-band" aria-label="Key results">
+  {stats.map((s, i) => (
+    <div class="stat fade">
+      <div class="n" data-count={s.count} data-suffix={s.suffix}>0{s.suffix}</div>
+      <div class="l">{s.label}</div>
+    </div>
+  ))}
+</section>
+
+<style>
+  .stats-band {
+    background: var(--color-neon);
+    color: var(--color-ink);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 5.5rem 4vw;
+  }
+
+  .stat .n {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(3rem, 6vw, 5.2rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .stat .l {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 900px) {
+    .stats-band {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

@@ -1,0 +1,148 @@
+---
+import { SITE } from '../../lib/utils';
+---
+
+<div class="offer fade" id="offer">
+  <div class="offer-text">
+    <span class="eyebrow">Start Here</span>
+    <h2>Every WhatsApp message you miss is revenue you already paid to attract.</h2>
+    <p>Our entry system captures every inbound WhatsApp inquiry into your CRM, tags it, and triggers follow-up automatically. Live in days, not months.</p>
+    <div class="offer-ctas">
+      <a class="btn btn-neon" href="/whatsapp-leads">See how it works</a>
+    </div>
+  </div>
+
+  <div class="chat" aria-label="WhatsApp automation demo">
+    <div class="bubble in">Hi, do you still have the 3-bedroom in Lekki? 🏠</div>
+    <div class="bubble out">
+      <span class="tag">AUTO-CAPTURED → CRM · TAGGED: HOT LEAD</span>
+      Yes! It's available. When would you like a viewing — tomorrow or Saturday?
+    </div>
+    <div class="bubble in">Saturday works 👍</div>
+    <div class="bubble out">
+      <span class="tag">FOLLOW-UP SCHEDULED · AGENT ASSIGNED</span>
+      Booked for Saturday 11am. You'll get a reminder Friday evening.
+    </div>
+  </div>
+</div>
+
+<style>
+  .offer {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 5rem;
+    align-items: center;
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    padding: 5rem 4vw;
+    margin: 0 4vw;
+    border-radius: var(--radius-card);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle neon glow — bottom right */
+  .offer::after {
+    content: "";
+    position: absolute;
+    bottom: -30%;
+    right: -10%;
+    width: 34vw;
+    height: 34vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--color-neon-rgb), 0.1), transparent 70%);
+    pointer-events: none;
+  }
+
+  .offer-text h2 {
+    font-size: clamp(1.7rem, 3.4vw, 2.8rem);
+    max-width: 22ch;
+  }
+
+  .offer-text p {
+    color: var(--color-grey);
+    margin-top: 1.4rem;
+    line-height: 1.7;
+    max-width: 44ch;
+  }
+
+  .offer-ctas {
+    margin-top: 2rem;
+  }
+
+  /* Chat bubbles */
+  .chat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .bubble {
+    max-width: 85%;
+    padding: 0.95rem 1.2rem;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  .bubble.in {
+    background: #1d1d1d;
+    border: 1px solid var(--color-line);
+    align-self: flex-start;
+    border-bottom-left-radius: 3px;
+  }
+
+  .bubble.out {
+    background: var(--color-neon-dim);
+    border: 1px solid rgba(var(--color-neon-rgb), 0.35);
+    align-self: flex-end;
+    border-bottom-right-radius: 3px;
+    color: var(--color-white);
+  }
+
+  .bubble .tag {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--color-neon);
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+  }
+
+  /* Staggered pop-in when offer scrolls into view */
+  .offer.visible .bubble {
+    animation: bubble-pop 0.55s cubic-bezier(0.2, 0.7, 0.3, 1.2) forwards;
+  }
+
+  .offer.visible .bubble:nth-child(1) { animation-delay: 0.1s; }
+  .offer.visible .bubble:nth-child(2) { animation-delay: 0.5s; }
+  .offer.visible .bubble:nth-child(3) { animation-delay: 0.9s; }
+  .offer.visible .bubble:nth-child(4) { animation-delay: 1.3s; }
+
+  @keyframes bubble-pop {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bubble {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .offer {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      margin: 0 0;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
+  }
+</style>

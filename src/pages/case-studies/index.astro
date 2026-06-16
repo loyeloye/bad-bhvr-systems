@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const caseStudies = await getCollection('caseStudies');
+const sorted = caseStudies.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+---
+
+<BaseLayout
+  title="Results & Case Studies | Bad Bhvr Systems"
+  description="Documented results from real engagements: 590% ROI, 7M+ impressions, and operations rebuilt across Nigeria, the US, and the UK."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Proof</p>
+      <h1>Receipts.</h1>
+      <p class="page-sub">
+        Every consultancy says they get results. Here are ours — with the real clients, the real numbers, and what we actually did. No invented metrics, no "up to" weasel words.
+      </p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="container">
+      <div class="cs-grid">
+        {sorted.map((cs, i) => (
+          <article class="cs-card reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <div class="cs-card-top">
+              <span class="cs-industry">{cs.data.industry}</span>
+              {cs.data.featured && <span class="cs-featured">Featured</span>}
+            </div>
+            <h2>{cs.data.client}</h2>
+            <p class="cs-title">{cs.data.title}</p>
+            <p class="cs-problem">{cs.data.problem}</p>
+            <div class="cs-result">
+              <span class="cs-metric">{cs.data.resultMetric}</span>
+              <span class="cs-result-label">{cs.data.result}</span>
+            </div>
+            <div class="cs-tools">
+              {cs.data.tools.slice(0, 4).map(t => <span class="tool-tag">{t}</span>)}
+            </div>
+            <a href={`/case-studies/${cs.id}`} class="cs-link">
+              Read case study
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .page-sub {
+    font-size: 1.125rem;
+    color: var(--color-muted);
+    max-width: 520px;
+    margin-top: 1.25rem;
+    line-height: 1.75;
+  }
+
+  .cs-section { padding-bottom: var(--spacing-section); }
+
+  .cs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .cs-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .cs-card:hover { border-color: rgba(232,83,26,0.4); transform: translateY(-3px); }
+
+  .cs-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cs-industry {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .cs-featured {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background: rgba(232,83,26,0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+  }
+
+  .cs-card h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .cs-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.4;
+  }
+
+  .cs-problem {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .cs-result {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 1rem;
+    background: rgba(232,83,26,0.06);
+    border: 1px solid rgba(232,83,26,0.15);
+    border-radius: var(--radius-sm);
+  }
+
+  .cs-metric {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .cs-result-label { font-size: 0.8rem; color: var(--color-muted); }
+
+  .cs-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tool-tag {
+    font-size: 0.7rem;
+    background: var(--color-surface-2);
+    color: var(--color-muted);
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+
+  .cs-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    transition: gap 0.2s;
+  }
+
+  .cs-link:hover { gap: 0.7rem; }
+
+  @media (max-width: 900px) { .cs-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .cs-grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,148 @@
+---
+import { SITE } from '../../lib/utils';
+import GlobeViz from './GlobeViz.astro';
+---
+
+<header class="hero" aria-labelledby="hero-heading">
+
+  <span class="eyebrow">AI · AUTOMATION · DATA</span>
+
+  <h1 id="hero-heading">
+    <span class="reveal-line"><span>The rules of business</span></span>
+    <span class="reveal-line"><span>were written <span class="ghost">before AI.</span></span></span>
+    <span class="reveal-line"><span class="break">Break them.</span></span>
+  </h1>
+
+  <p class="hero-sub">
+    Bad Bhvr Systems rebuilds how companies operate — automating the work that wastes your people,
+    embedding AI where it actually pays, and turning scattered data into decisions you can defend.
+    Lagos-built. Proven from Cincinnati to Cape Town.
+  </p>
+
+  <div class="hero-ctas">
+    <a class="btn btn-neon" href="/contact">Book a Working Session</a>
+    <a
+      class="btn btn-ghost"
+      href={`${SITE.whatsappLink}?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20services.`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >Message us on WhatsApp ↗</a>
+  </div>
+
+  <div class="hero-meta" aria-hidden="true">
+    <span>LAGOS — ABU DHABI — LONDON</span>
+    <span>SCROLL ↓</span>
+  </div>
+
+  <GlobeViz />
+
+</header>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 9rem 4vw 4rem;
+    overflow: hidden;
+  }
+
+  /* Radial neon glow — top right */
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -15%;
+    width: 60vw;
+    height: 60vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--color-neon-rgb), 0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    margin-bottom: 2.2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    position: relative;
+    z-index: 1;
+    max-width: 13ch;
+  }
+
+  .ghost {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(245, 245, 243, 0.55);
+  }
+
+  .break {
+    color: var(--color-neon);
+  }
+
+  /* Line-by-line rise reveal */
+  .reveal-line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .reveal-line span {
+    display: block;
+    transform: translateY(110%);
+    animation: rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  }
+
+  .reveal-line:nth-child(2) span { animation-delay: 0.12s; }
+  .reveal-line:nth-child(3) span { animation-delay: 0.24s; }
+
+  @keyframes rise {
+    to { transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-line span {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  .hero-sub {
+    position: relative;
+    z-index: 1;
+    margin-top: 2.4rem;
+    max-width: 54ch;
+    color: var(--color-grey);
+    font-size: clamp(1rem, 1.4vw, 1.18rem);
+    line-height: 1.65;
+  }
+
+  .hero-ctas {
+    position: relative;
+    z-index: 1;
+    margin-top: 2.8rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta {
+    position: absolute;
+    bottom: 2.2rem;
+    left: 4vw;
+    right: 4vw;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: var(--color-dgrey);
+    z-index: 1;
+  }
+
+  @media (max-width: 900px) {
+    .hero { padding: 7rem 4vw 5rem; }
+    .hero-meta { position: static; margin-top: 3rem; }
+  }
+</style>

@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../../lib/utils';
+
+const posts = await getCollection('blog');
+const sorted = posts.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+---
+
+<BaseLayout
+  title="Insights — AI, Automation & Data for Operators | Bad Bhvr Systems"
+  description="Practical writing on automation, applied AI, CRM, and data for business operators in Africa and EMEA. No hype, no recycled thought-leadership."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Insights</p>
+      <h1>Things we'd tell you over coffee</h1>
+      <p class="page-sub">
+        Practical writing for operators. What's working in automation and AI right now, what's overhyped, and what we're seeing inside real businesses from Lagos to Dubai.
+      </p>
+    </div>
+  </section>
+
+  <section class="blog-section">
+    <div class="container">
+      <div class="blog-grid">
+        {sorted.map((post, i) => (
+          <article class="post-card reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <div class="post-meta">
+              <span class="post-category">{post.data.category}</span>
+              <time datetime={post.data.publishDate.toISOString()}>{formatDate(post.data.publishDate)}</time>
+            </div>
+            <h2>{post.data.title}</h2>
+            <p class="post-excerpt">{post.data.excerpt}</p>
+            <div class="post-tags">
+              {post.data.tags.slice(0, 3).map(t => <span class="tag">{t}</span>)}
+            </div>
+            <a href={`/blog/${post.id}`} class="post-link">
+              Read post
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .page-sub {
+    font-size: 1.125rem;
+    color: var(--color-muted);
+    max-width: 480px;
+    margin-top: 1.25rem;
+    line-height: 1.75;
+  }
+
+  .blog-section { padding-bottom: var(--spacing-section); }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .post-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .post-card:hover { border-color: rgba(232,83,26,0.4); transform: translateY(-3px); }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+  }
+
+  .post-category {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  time { color: var(--color-muted); }
+
+  .post-card h2 { font-size: 1.15rem; line-height: 1.4; }
+
+  .post-excerpt {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    background: var(--color-surface-2);
+    color: var(--color-muted);
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+
+  .post-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    transition: gap 0.2s;
+  }
+
+  .post-link:hover { gap: 0.7rem; }
+
+  @media (max-width: 900px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .blog-grid { grid-template-columns: 1fr; } }
+</style>

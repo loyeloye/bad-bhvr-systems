@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { formatDate } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+---
+
+<BaseLayout
+  title={d.metaTitle ?? `${d.title} | Bad Bhvr Systems Blog`}
+  description={d.metaDescription ?? d.excerpt}
+  article={true}
+>
+  <article>
+    <header class="post-header">
+      <div class="container">
+        <a href="/blog" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          All Posts
+        </a>
+        <div class="post-meta">
+          <span class="post-category">{d.category}</span>
+          <time datetime={d.publishDate.toISOString()}>{formatDate(d.publishDate)}</time>
+          <span>By {d.author}</span>
+        </div>
+        <h1>{d.title}</h1>
+        <p class="post-excerpt">{d.excerpt}</p>
+      </div>
+    </header>
+
+    <div class="post-body">
+      <div class="container post-layout">
+        <div class="post-content">
+          <Content />
+        </div>
+        <aside class="post-sidebar">
+          <div class="sidebar-card">
+            <h3>Tags</h3>
+            <div class="tags-list">
+              {d.tags.map(t => <span class="tag">{t}</span>)}
+            </div>
+          </div>
+          <div class="sidebar-cta">
+            <p>Want to implement something like this?</p>
+            <a href="/contact" class="btn-accent">Talk to us</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-header {
+    padding-top: 9rem;
+    padding-bottom: 4rem;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--color-text); }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .post-category {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .post-header h1 { max-width: 800px; }
+
+  .post-excerpt {
+    font-size: 1.15rem;
+    color: var(--color-muted);
+    max-width: 660px;
+    margin-top: 1rem;
+    line-height: 1.75;
+  }
+
+  .post-body {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .post-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .post-content {
+    color: var(--color-muted);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+  }
+
+  .post-content :global(h2) {
+    font-size: 1.4rem;
+    color: var(--color-text);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .post-content :global(h3) {
+    font-size: 1.15rem;
+    color: var(--color-text);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-content :global(p) { margin-bottom: 1.25rem; }
+
+  .post-content :global(ul), .post-content :global(ol) {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .post-content :global(li) { margin-bottom: 0.5rem; }
+
+  .post-content :global(strong) { color: var(--color-text); }
+
+  .post-content :global(a) { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  .post-content :global(code) {
+    background: var(--color-surface-2);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    font-size: 0.88em;
+    font-family: var(--font-mono);
+  }
+
+  .sidebar-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-card h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .tags-list { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+  .tag {
+    font-size: 0.7rem;
+    background: var(--color-surface-2);
+    color: var(--color-muted);
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+
+  .sidebar-cta {
+    background: rgba(232,83,26,0.06);
+    border: 1px solid rgba(232,83,26,0.2);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .sidebar-cta p { font-size: 0.875rem; font-weight: 600; color: var(--color-text); }
+
+  .btn-accent {
+    display: inline-flex;
+    background: var(--color-accent);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .btn-accent:hover { background: var(--color-accent-warm); }
+
+  @media (max-width: 900px) {
+    .post-layout { grid-template-columns: 1fr; }
+    .post-sidebar { order: -1; }
+  }
+</style>

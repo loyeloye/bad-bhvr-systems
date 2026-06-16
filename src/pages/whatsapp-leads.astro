@@ -1,0 +1,522 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/utils';
+
+const faqs = [
+  {
+    q: 'Does this work with my existing CRM?',
+    a: 'If you run Zoho or Dynamics 365, yes — directly. Other CRMs, usually yes via integration. No CRM at all? We\'ll set one up as part of the build.',
+  },
+  {
+    q: 'How long until it\'s live?',
+    a: 'Days, not months. Most deployments are live within one to two weeks.',
+  },
+  {
+    q: 'Do my customers notice anything?',
+    a: 'Only that you reply faster. The capture happens behind the scenes; conversations stay human.',
+  },
+  {
+    q: 'What about my team\'s existing chats?',
+    a: 'The system handles inbound from go-live onward. Historical chats can be imported as part of setup.',
+  },
+  {
+    q: 'Is my data safe?',
+    a: 'The system runs on your accounts — your WhatsApp Business API, your CRM. We build it; you own it.',
+  },
+  {
+    q: 'How much does it cost?',
+    a: 'We offer a starter package. Book a demo and we\'ll send you the full breakdown — pricing depends on your CRM choice and volume.',
+  },
+];
+---
+
+<BaseLayout
+  title="Never Lose a WhatsApp Lead Again — WhatsApp-to-CRM Automation | Bad Bhvr Systems"
+  description="Every WhatsApp inquiry captured into your CRM, tagged, and followed up automatically. The lead-capture system built for how Africa and the Gulf actually do business. Live in days."
+>
+  <!-- Minimal nav override for landing page feel -->
+  <div class="lp-nav-bar">
+    <div class="container lp-nav-inner">
+      <a href="/" class="wordmark">BADBHVR<span>.</span></a>
+      <a href={SITE.whatsappLink} class="nav-wa" target="_blank" rel="noopener noreferrer">
+        Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="lp-hero">
+    <div class="container">
+      <div class="lp-hero-inner">
+        <span class="lp-badge">THE WHATSAPP-TO-CRM SYSTEM</span>
+        <h1>You paid to get that lead.<br />Then WhatsApp swallowed it.</h1>
+        <p class="lp-hero-sub">
+          In Lagos, Nairobi, Dubai — business happens on WhatsApp. But chats scroll, staff forget, and leads die quietly in a thread. This system captures every inbound WhatsApp inquiry into your CRM, tags it, and triggers follow-up automatically. Nothing slips. Ever.
+        </p>
+        <div class="lp-ctas">
+          <a href="#book-demo" class="btn-primary-lp">Book a 20-Minute Demo</a>
+          <a
+            href={`${SITE.whatsappLink}?text=Hi%2C%20I%20want%20to%20set%20up%20the%20WhatsApp%20lead%20capture%20system.`}
+            class="btn-wa-lp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Message Us Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pain points -->
+  <section class="pain-section">
+    <div class="container">
+      <div class="pain-header reveal">
+        <h2>Count what it's already costing you</h2>
+      </div>
+      <div class="pain-grid">
+        {[
+          'A customer messages at 9pm. Nobody replies until noon. They bought elsewhere at 10.',
+          'Your best salesperson leaves — and their chats, contacts, and pipeline leave with them.',
+          'You spent money on ads to make the phone buzz. Nobody can tell you what those conversations turned into.',
+          '"I\'ll reply later" is your current lead management system.',
+        ].map((pain, i) => (
+          <div class="pain-card reveal" style={`transition-delay: ${i * 0.07}s`}>
+            <span class="pain-x" aria-hidden="true">✗</span>
+            <p>{pain}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The solution -->
+  <section class="solution-section">
+    <div class="container">
+      <div class="solution-header reveal">
+        <span class="eyebrow">The Fix</span>
+        <h2>Every message becomes a record. Every record gets a follow-up.</h2>
+      </div>
+
+      <div class="steps-lp">
+        {[
+          { num: '01', title: 'Capture.', body: 'Every inbound WhatsApp inquiry lands in your CRM automatically — name, number, message, source.' },
+          { num: '02', title: 'Tag.', body: 'Leads are classified the moment they arrive: new inquiry, returning customer, hot, cold.' },
+          { num: '03', title: 'Trigger.', body: 'Follow-up sequences fire automatically. Replies, reminders, task assignments — no human memory required.' },
+          { num: '04', title: 'See.', body: 'A dashboard shows every lead, every stage, every salesperson\'s follow-through. In real time.' },
+        ].map((step, i) => (
+          <div class="step-lp reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <span class="step-num">{step.num}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- What's included -->
+  <section class="includes-section">
+    <div class="container">
+      <div class="includes-header reveal">
+        <span class="eyebrow">What's Included</span>
+        <h2>Built by people who measure everything</h2>
+        <p style="color:var(--color-muted);margin-top:1rem;max-width:600px;line-height:1.75">Bad Bhvr Systems has spent 10+ years building automation and CRM systems for companies in Nigeria, the US, and the UK — including a documented 590% ROI campaign. This system exists because we watched too many good businesses bleed leads they'd already paid for.</p>
+      </div>
+      <div class="includes-grid">
+        {[
+          { icon: '⚡', title: 'WhatsApp Business API connection', body: 'Your number connected to the API through an approved provider.' },
+          { icon: '📋', title: 'CRM setup and pipeline configuration', body: 'Zoho CRM or Dynamics 365 configured for your sales process.' },
+          { icon: '🏷', title: 'Lead tagging and classification', body: 'Automatic tagging based on message content.' },
+          { icon: '🔁', title: 'Follow-up automation', body: 'Instant acknowledgment messages and timed follow-up sequences.' },
+          { icon: '👁', title: 'Pipeline dashboard', body: 'A live view of all open inquiries, their status, and who owns them.' },
+          { icon: '📖', title: 'Team training and documentation', body: 'Your team knows how to use the system before we hand it over.' },
+        ].map((item, i) => (
+          <div class="include-card reveal" style={`transition-delay: ${i * 0.08}s`}>
+            <span class="include-icon" aria-hidden="true">{item.icon}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="faq-header reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Common questions</h2>
+      </div>
+      <div class="faq-grid">
+        {faqs.map((faq, i) => (
+          <div class="faq-item reveal" style={`transition-delay: ${i * 0.07}s`}>
+            <h3>{faq.q}</h3>
+            <p>{faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / Book -->
+  <section class="lp-cta-section" id="book-demo">
+    <div class="container">
+      <div class="lp-cta-box reveal">
+        <span class="eyebrow">Book a Demo</span>
+        <h2>Twenty minutes. We'll show you the system live.</h2>
+        <p>
+          Book a demo. We'll walk through the exact flow with your business in mind — and tell you honestly if it's not a fit.
+        </p>
+        <div class="lp-final-ctas">
+          <a
+            href={`${SITE.whatsappLink}?text=Hi%2C%20I%27d%20like%20to%20book%20a%2020-minute%20demo%20for%20the%20WhatsApp%20lead%20capture%20system.`}
+            class="btn-primary-lp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Book a 20-Minute Demo
+          </a>
+          <a href="/contact" class="btn-ghost-lp">Send a Message Instead</a>
+        </div>
+        <p class="lp-note">Setup typically takes 5–10 business days. No lock-in contracts.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lp-nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .lp-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+  }
+
+  .wordmark span { color: var(--color-accent); }
+
+  .nav-wa {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #25D366;
+    border: 1px solid #25D366;
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+  }
+
+  .nav-wa:hover { background: rgba(37,211,102,0.1); }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  /* Hero */
+  .lp-hero {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-top: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lp-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232,83,26,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,83,26,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .lp-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+
+  .lp-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #25D366;
+    border: 1px solid rgba(37,211,102,0.3);
+    background: rgba(37,211,102,0.06);
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+
+  .lp-hero-sub {
+    font-size: 1.2rem;
+    color: var(--color-muted);
+    max-width: 560px;
+    margin: 1.25rem 0 2.5rem;
+    line-height: 1.75;
+  }
+
+  .lp-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn-primary-lp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-accent);
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary-lp:hover { background: var(--color-accent-warm); transform: translateY(-1px); }
+
+  .btn-wa-lp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-wa-lp:hover { background: #1da851; transform: translateY(-1px); }
+
+  /* Pain */
+  .pain-section {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+    background: var(--color-surface);
+  }
+
+  .pain-header { margin-bottom: 3rem; }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .pain-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--color-base);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  .pain-x {
+    color: #e05252;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .pain-card p { font-size: 0.9rem; color: var(--color-muted); line-height: 1.6; }
+
+  /* Solution */
+  .solution-section {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  .solution-header {
+    max-width: 600px;
+    margin-bottom: 4rem;
+  }
+
+  .solution-header p { color: var(--color-muted); margin-top: 1rem; line-height: 1.75; }
+
+  .steps-lp {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .step-lp {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.2s;
+  }
+
+  .step-lp:last-child { border-bottom: none; }
+  .step-lp:hover { background: var(--color-surface-2); }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    width: 2rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-lp h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+  .step-lp p { font-size: 0.875rem; color: var(--color-muted); line-height: 1.65; }
+
+  /* Includes */
+  .includes-section {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+    background: var(--color-surface);
+  }
+
+  .includes-header { margin-bottom: 3rem; }
+
+  .includes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .include-card {
+    background: var(--color-base);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    transition: border-color 0.3s;
+  }
+
+  .include-card:hover { border-color: rgba(232,83,26,0.3); }
+
+  .include-icon { font-size: 1.5rem; display: block; margin-bottom: 0.75rem; }
+
+  .include-card h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+  .include-card p { font-size: 0.85rem; color: var(--color-muted); line-height: 1.65; }
+
+  /* FAQ */
+  .faq-section {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  .faq-header { margin-bottom: 3rem; }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .faq-item {
+    padding: 1.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .faq-item h3 { font-size: 0.975rem; margin-bottom: 0.75rem; }
+
+  .faq-item p { font-size: 0.875rem; color: var(--color-muted); line-height: 1.7; }
+
+  /* Final CTA */
+  .lp-cta-section {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+    background: var(--color-surface);
+  }
+
+  .lp-cta-box {
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .lp-cta-box h2 { margin-bottom: 1.25rem; }
+
+  .lp-cta-box > p {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .lp-final-ctas {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-ghost-lp {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-muted);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-ghost-lp:hover { color: var(--color-text); border-color: var(--color-muted); }
+
+  .lp-note { font-size: 0.8rem; color: var(--color-muted); }
+
+  @media (max-width: 768px) {
+    .pain-grid { grid-template-columns: 1fr; }
+    .includes-grid { grid-template-columns: 1fr 1fr; }
+    .faq-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .includes-grid { grid-template-columns: 1fr; }
+  }
+</style>

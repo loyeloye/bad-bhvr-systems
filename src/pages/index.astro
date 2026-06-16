@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import ClientLogos from '../components/home/ClientLogos.astro';
+import ThreePillars from '../components/home/ThreePillars.astro';
+import ResultsBand from '../components/home/ResultsBand.astro';
+import HowItWorks from '../components/home/HowItWorks.astro';
+import FeaturedOffer from '../components/home/FeaturedOffer.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../lib/utils';
+
+const caseStudies = await getCollection('caseStudies');
+const featured = caseStudies.find((cs: any) => cs.data.featured);
+---
+
+<BaseLayout
+  title="Bad Bhvr Systems — AI, Automation & Data Consultancy | Lagos · Africa · EMEA"
+  description="We rebuild how businesses operate. Process automation, applied AI, and decision-grade data for companies in Lagos, across Africa, and the Gulf. Documented results: 590% ROI."
+>
+  <Hero />
+  <ClientLogos />
+  <ThreePillars />
+  <ResultsBand />
+  <HowItWorks />
+
+  <!-- Featured offer card -->
+  <section class="offer-wrap">
+    <FeaturedOffer />
+  </section>
+
+  <!-- Case study: oversized stroke numerals -->
+  {featured && (
+    <section class="case-section">
+      <div class="case">
+        <div class="fade">
+          <span class="eyebrow">Proof</span>
+          <div class="big">5<em>9</em>0<em>%</em></div>
+        </div>
+        <div class="fade">
+          <h2>How one campaign returned 590% ROI</h2>
+          <p>The short version: tighter targeting, automated follow-up, and decisions made on data instead of instinct. The long version is worth your two minutes.</p>
+          <div class="case-ctas">
+            <a class="btn btn-ghost" href={`/case-studies/${featured.id}`}>Read the case study →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Final CTA -->
+  <section class="final-cta fade">
+    <span class="eyebrow">Last Call</span>
+    <h2>Your competitors are still doing it manually. <span class="neon-word">That's your window.</span></h2>
+    <p>Book a working session. We'll look at one process in your business — live — and show you what it looks like automated. No deck, no fluff, no obligation.</p>
+    <div class="final-ctas">
+      <a class="btn btn-neon" href="/contact">Book a Working Session</a>
+      <a
+        class="btn btn-ghost"
+        href={`${SITE.whatsappLink}?text=Hi%2C%20I%27d%20like%20to%20book%20a%20working%20session.`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >Message us on WhatsApp ↗</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Offer section spacing */
+  .offer-wrap {
+    padding: 7.5rem 0;
+  }
+
+  /* Case study */
+  .case-section {
+    padding: 7.5rem 4vw;
+  }
+
+  .case {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: end;
+  }
+
+  .big {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(5rem, 14vw, 12rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--color-neon);
+  }
+
+  .big em {
+    font-style: normal;
+    color: var(--color-neon);
+    -webkit-text-stroke: 0;
+  }
+
+  .case h2 {
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    max-width: 30ch;
+  }
+
+  .case p {
+    color: var(--color-grey);
+    line-height: 1.7;
+    max-width: 42ch;
+    margin-top: 1.2rem;
+  }
+
+  .case-ctas {
+    margin-top: 2rem;
+  }
+
+  /* Final CTA */
+  .final-cta {
+    padding: 7.5rem 4vw;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .final-cta h2 {
+    font-size: clamp(2.2rem, 5.5vw, 4.6rem);
+    max-width: 18ch;
+    margin-top: 0;
+  }
+
+  .final-cta p {
+    color: var(--color-grey);
+    margin-top: 1.6rem;
+    max-width: 50ch;
+    line-height: 1.7;
+  }
+
+  .final-ctas {
+    margin-top: 2.4rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .case { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>
