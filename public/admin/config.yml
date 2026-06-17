@@ -6,6 +6,8 @@ backend:
   name: github
   repo: loyeloye/bad-bhvr-systems
   branch: main
+  auth_type: pkce
+  app_id: Ov23liDoDR6Uh5YReAZv
 
 # LOCAL DEVELOPMENT: enable local editing without GitHub.
 # Run: npm run dev:cms  (starts both Astro + the CMS proxy in one command)
