@@ -6,8 +6,8 @@ backend:
   name: github
   repo: loyeloye/bad-bhvr-systems
   branch: main
-  auth_type: pkce
-  app_id: Ov23liDoDR6Uh5YReAZv
+  base_url: https://bad-bhvr-systems.vercel.app
+  auth_endpoint: api/auth
 
 # ─── Media ────────────────────────────────────────────────────────────────────
 media_folder: public/images/uploads
