@@ -7,7 +7,6 @@ import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   site: 'https://badbhvr.com',
-  output: 'hybrid',
   adapter: vercel(),
   integrations: [mdx(), sitemap()],
   vite: {
