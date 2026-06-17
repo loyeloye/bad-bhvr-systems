@@ -9,11 +9,6 @@ backend:
   auth_type: pkce
   app_id: Ov23liDoDR6Uh5YReAZv
 
-# LOCAL DEVELOPMENT: enable local editing without GitHub.
-# Run: npm run dev:cms  (starts both Astro + the CMS proxy in one command)
-# Then open: http://localhost:4321/admin
-local_backend: true
-
 # ─── Media ────────────────────────────────────────────────────────────────────
 media_folder: public/images/uploads
 public_folder: /images/uploads
