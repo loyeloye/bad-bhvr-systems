@@ -1,13 +1,26 @@
 ---
-const clients = ['LINCRIDE', 'TEPS', 'RELIANCE INFOSYSTEMS', 'SOLUTIONS MGA', 'MRWINS'];
-// Duplicate for seamless loop
+const clients = [
+  { name: 'LincRide',             slug: 'lincride' },
+  { name: 'TEPS',                 slug: 'teps' },
+  { name: 'Reliance Infosystems', slug: 'reliance' },
+  { name: 'Solutions MGA',        slug: 'solutions-mga' },
+  { name: 'MrWins',               slug: 'mrwins' },
+];
 const track = [...clients, ...clients];
 ---
 
 <div class="marquee" aria-label="Clients we've worked with">
   <div class="marquee-track" aria-hidden="true">
-    {track.map(name => (
-      <span>{name}</span>
+    {track.map(c => (
+      <span class="logo-wrap">
+        <img
+          src={`/images/clients/${c.slug}.svg`}
+          alt={c.name}
+          height="28"
+          loading="lazy"
+          decoding="async"
+        />
+      </span>
     ))}
   </div>
 </div>
@@ -16,34 +29,40 @@ const track = [...clients, ...clients];
   .marquee {
     border-top: 1px solid var(--color-line);
     border-bottom: 1px solid var(--color-line);
-    padding: 1.6rem 0;
+    padding: 1.8rem 0;
     overflow: hidden;
     position: relative;
   }
 
   .marquee-track {
     display: flex;
+    align-items: center;
     gap: 5rem;
     width: max-content;
-    animation: marquee-scroll 28s linear infinite;
+    animation: marquee-scroll 32s linear infinite;
   }
 
   .marquee:hover .marquee-track {
     animation-play-state: paused;
   }
 
-  .marquee-track span {
-    font-family: var(--font-head);
-    font-size: 1.05rem;
-    color: var(--color-dgrey);
-    letter-spacing: 0.18em;
-    white-space: nowrap;
-    transition: color 0.3s;
-    cursor: default;
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+    filter: brightness(0) invert(1);
   }
 
-  .marquee-track span:hover {
-    color: var(--color-neon);
+  .logo-wrap:hover {
+    opacity: 1;
+    filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(20deg);
+  }
+
+  .logo-wrap img {
+    height: 28px;
+    width: auto;
+    display: block;
   }
 
   @keyframes marquee-scroll {

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 36" width="110" height="36" fill="none">
+  <path d="M10 22 L10 12 L7 16 L4 12 L4 22" stroke="white" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+  <path d="M10 12 L16 22" stroke="white" stroke-width="1.5" fill="none"/>
+  <path d="M10 17 L14 17" stroke="white" stroke-width="1.5" fill="none"/>
+  <text x="24" y="24" font-family="system-ui,-apple-system,Arial,sans-serif" font-size="15" font-weight="700" fill="white" letter-spacing="1">MRWINS</text>
+</svg>

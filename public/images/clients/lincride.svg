@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 36" width="140" height="36" fill="none">
+  <circle cx="6" cy="18" r="4" fill="white"/>
+  <circle cx="18" cy="8" r="3" fill="white" opacity="0.6"/>
+  <line x1="9" y1="15" x2="16" y2="10" stroke="white" stroke-width="1.5" opacity="0.6"/>
+  <text x="28" y="24" font-family="system-ui,-apple-system,Arial,sans-serif" font-size="15" font-weight="700" fill="white" letter-spacing="1">LINCRIDE</text>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <rect width="240" height="60" fill="#0A0A0A"/>
+  <rect x="0" y="0" width="4" height="60" fill="#E8FF2A"/>
+  <text x="16" y="40" font-family="system-ui,-apple-system,'Segoe UI',Arial,sans-serif" font-size="24" font-weight="800" fill="white" letter-spacing="3">BADBHVR</text>
+  <text x="16" y="54" font-family="system-ui,-apple-system,'Segoe UI',Arial,sans-serif" font-size="9" font-weight="500" fill="#E8FF2A" letter-spacing="4">SYSTEMS</text>
+</svg>

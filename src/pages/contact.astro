@@ -5,93 +5,76 @@ import { SITE } from '../lib/utils';
 ---
 
 <BaseLayout
-  title="Contact — Book a Working Session | Bad Bhvr Systems"
+  title="Contact — Book a Working Session"
   description="Book a working session with Bad Bhvr Systems. We'll look at one process in your business live and show you what it looks like automated."
 >
-  <section class="contact-hero">
+  <!-- Hero -->
+  <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Contact</p>
-      <h1>No discovery-call theatre.<br />A working session.</h1>
+      <h1>No discovery-call theatre.<br/>A working session.</h1>
       <p class="hero-sub">
-        Tell us about your business and one thing that frustrates you about how it runs. We'll come to the call having actually thought about it — and we'll look at one process live. If we're not the right fit, we'll say so and point you somewhere useful.
+        Tell us about your business and one thing that frustrates you about how it runs. We'll come to the call having actually thought about it.
       </p>
     </div>
   </section>
 
+  <!-- Contact layout -->
   <section class="contact-section">
-    <div class="container contact-layout">
-      <!-- Form -->
-      <div>
-        <h2>Book a working session</h2>
-        <p class="form-intro">Within one business day. Usually faster. For urgent: hit the WhatsApp button.</p>
-        <div class="form-wrapper">
-          <ContactForm />
+    <div class="contact-grid">
+      <!-- Form side -->
+      <div class="form-side">
+        <div class="form-head">
+          <h2>Book a working session</h2>
+          <p>Within one business day. Usually faster.</p>
         </div>
+        <ContactForm />
       </div>
 
-      <!-- Info -->
-      <aside class="contact-info">
-        <div class="info-card">
-          <h3>WhatsApp</h3>
+      <!-- Info side -->
+      <aside class="info-side">
+        <div class="info-row fade">
+          <p class="info-label">WhatsApp</p>
           <a
             href={`${SITE.whatsappLink}?text=Hi%2C%20I%27d%20like%20to%20book%20a%20working%20session.`}
-            class="contact-method wa"
+            class="info-link wa"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
             +234 810 698 1030
           </a>
-          <p class="method-note">Fastest way to reach us. Tap to chat.</p>
+          <p class="info-note">Fastest way to reach us.</p>
         </div>
 
-        <div class="info-card">
-          <h3>Email</h3>
-          <a href={`mailto:${SITE.email}`} class="contact-method email">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-            {SITE.email}
-          </a>
-          <p class="method-note">We respond within 1 business day.</p>
+        <div class="info-row fade">
+          <p class="info-label">Email</p>
+          <a href={`mailto:${SITE.email}`} class="info-link email">{SITE.email}</a>
+          <p class="info-note">We respond within 1 business day.</p>
         </div>
 
-        <div class="info-card">
-          <h3>Book a Call</h3>
-          <p class="method-note">Prefer to talk? Use the form above to request a call and we'll send you a booking link.</p>
-        </div>
-
-        <div class="info-card expectations">
-          <h3>What to expect</h3>
-          <ul>
-            <li>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              A real conversation, not a sales pitch
-            </li>
-            <li>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              Honest advice on where to start
-            </li>
-            <li>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              Clear next steps, whatever you decide
-            </li>
-            <li>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              No obligation, no pressure
-            </li>
+        <div class="info-row fade">
+          <p class="info-label">What to expect</p>
+          <ul class="expect-list">
+            {[
+              'A real conversation, not a sales pitch',
+              'Honest advice on where to start',
+              'Clear next steps, whatever you decide',
+              'No obligation, no pressure',
+            ].map(item => (
+              <li>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                {item}
+              </li>
+            ))}
           </ul>
+        </div>
+
+        <div class="info-row neon-row fade">
+          <p class="neon-stat">590%</p>
+          <p class="neon-stat-label">Average ROI delivered on managed campaigns</p>
         </div>
       </aside>
     </div>
@@ -99,100 +82,139 @@ import { SITE } from '../lib/utils';
 </BaseLayout>
 
 <style>
-  .contact-hero {
-    padding-top: 10rem;
-    padding-bottom: 5rem;
+  /* ── Hero ── */
+  .page-hero {
+    padding: 9rem var(--pad-x) 5rem;
+    border-bottom: 1px solid var(--color-line);
   }
 
   .eyebrow {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: var(--color-neon);
     display: block;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .hero-sub {
     font-size: 1.1rem;
-    color: var(--color-muted);
-    max-width: 580px;
-    margin-top: 1.25rem;
+    color: var(--color-grey);
+    max-width: 48ch;
+    margin-top: 1.5rem;
     line-height: 1.75;
   }
 
-  .contact-section {
-    padding-bottom: var(--spacing-section);
-  }
+  /* ── Contact layout ── */
+  .contact-section { padding: 0; }
 
-  .contact-layout {
+  .contact-grid {
     display: grid;
     grid-template-columns: 1fr 360px;
-    gap: 5rem;
-    align-items: start;
+    gap: 1px;
+    background: var(--color-line);
+    min-height: 60vh;
   }
 
-  .contact-layout h2 { margin-bottom: 0.5rem; }
-
-  .form-intro {
-    color: var(--color-muted);
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
+  /* Form side */
+  .form-side {
+    padding: 4rem var(--pad-x);
+    background: var(--color-ink);
   }
 
-  .info-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
+  .form-head { margin-bottom: 2.5rem; }
+  .form-head h2 { margin-bottom: 0.4rem; }
+  .form-head p { color: var(--color-grey); font-size: 0.875rem; }
+
+  /* Info side */
+  .info-side {
+    background: var(--color-panel);
+    display: flex;
+    flex-direction: column;
   }
 
-  .info-card h3 {
-    font-size: 0.75rem;
+  .info-row {
+    padding: 2rem 2rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .info-label {
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-muted);
+    color: var(--color-dgrey);
     margin-bottom: 0.75rem;
   }
 
-  .contact-method {
-    display: flex;
+  .info-link {
+    display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
-    transition: color 0.2s;
+    margin-bottom: 0.4rem;
+    transition: opacity 0.2s;
   }
 
-  .contact-method.wa { color: #25D366; }
-  .contact-method.wa:hover { color: #1da851; }
-  .contact-method.email { color: var(--color-text); }
-  .contact-method.email:hover { color: var(--color-accent); }
+  .info-link:hover { opacity: 0.75; }
+  .info-link.wa { color: #25D366; }
+  .info-link.email { color: var(--color-white); }
 
-  .method-note {
+  .info-note {
     font-size: 0.8rem;
-    color: var(--color-muted);
+    color: var(--color-dgrey);
     line-height: 1.5;
   }
 
-  .expectations ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-
-  .expectations li {
+  .expect-list {
+    list-style: none;
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: var(--color-text);
+    flex-direction: column;
+    gap: 0.6rem;
   }
 
-  .expectations li svg { color: var(--color-accent); flex-shrink: 0; }
+  .expect-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--color-grey);
+  }
+
+  .expect-list svg { color: var(--color-neon); flex-shrink: 0; margin-top: 2px; }
+
+  /* Neon stat block */
+  .neon-row {
+    background: var(--color-neon);
+    border-bottom: none;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .neon-stat {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800;
+    color: var(--color-ink);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .neon-stat-label {
+    font-size: 0.85rem;
+    color: rgba(10,10,10,0.6);
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    max-width: 18ch;
+  }
 
   @media (max-width: 900px) {
-    .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-    .contact-info { order: -1; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .info-side { order: -1; }
+    .neon-row { padding: 3rem 2rem; }
   }
 </style>

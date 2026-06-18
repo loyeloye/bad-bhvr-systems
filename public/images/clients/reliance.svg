@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 36" width="180" height="36" fill="none">
+  <rect x="1" y="7" width="5" height="5" fill="white"/>
+  <rect x="8" y="7" width="5" height="5" fill="white" opacity="0.5"/>
+  <rect x="1" y="14" width="5" height="5" fill="white" opacity="0.5"/>
+  <rect x="8" y="14" width="5" height="5" fill="white"/>
+  <rect x="1" y="21" width="5" height="5" fill="white"/>
+  <rect x="8" y="21" width="5" height="5" fill="white" opacity="0.5"/>
+  <text x="22" y="24" font-family="system-ui,-apple-system,Arial,sans-serif" font-size="13" font-weight="700" fill="white" letter-spacing="1">RELIANCE IS</text>
+</svg>
