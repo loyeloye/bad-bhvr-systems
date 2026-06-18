@@ -12,13 +12,16 @@ interface Props {
 const {
   title,
   description = 'Bad Bhvr Systems helps African businesses automate their processes, integrate AI, and make decisions with data. Practical. Results-driven.',
-  image = '/images/og-default.svg',
+  image = '/images/og-default.png',
   article = false,
   noindex = false,
 } = Astro.props;
 
-const pageTitle = title ? `${title} | Bad Bhvr Systems` : `Bad Bhvr Systems — ${SITE.tagline}`;
-const canonicalURL = new URL(Astro.url.pathname, SITE.url);
+const pageTitle = title
+  ? (title.includes('Bad Bhvr Systems') ? title : `${title} | Bad Bhvr Systems`)
+  : `Bad Bhvr Systems — ${SITE.tagline}`;
+const base = Astro.site ?? new URL(SITE.url);
+const canonicalURL = new URL(Astro.url.pathname, base);
 ---
 
 <title>{pageTitle}</title>
@@ -31,7 +34,7 @@ const canonicalURL = new URL(Astro.url.pathname, SITE.url);
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, SITE.url)} />
+<meta property="og:image" content={new URL(image, base)} />
 <meta property="og:site_name" content={SITE.name} />
 <meta property="og:locale" content="en_NG" />
 
@@ -39,4 +42,4 @@ const canonicalURL = new URL(Astro.url.pathname, SITE.url);
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={new URL(image, SITE.url)} />
+<meta name="twitter:image" content={new URL(image, base)} />

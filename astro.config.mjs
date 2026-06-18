@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  site: 'https://badbhvr.com',
+  site: 'https://bad-bhvr-systems.vercel.app',
   adapter: vercel(),
   integrations: [mdx(), sitemap()],
   vite: {

@@ -13,14 +13,14 @@ export function slugify(text: string): string {
 export const SITE = {
   name: 'Bad Bhvr Systems',
   tagline: 'Good businesses run on Bad Behaviour.',
-  url: 'https://badbhvr.com',
+  url: 'https://bad-bhvr-systems.vercel.app',
   email: 'hello@badbhvr.com',
   whatsapp: '+2348106981030',
   whatsappLink: 'https://wa.me/2348106981030',
   bookingCTA: 'Book a Working Session',
   social: {
     twitter: 'https://twitter.com/badbhvrsystems',
-    linkedin: 'https://linkedin.com/company/badbhvrsystems',
+    linkedin: 'https://linkedin.com/company/bad-bhvr-systems',
     instagram: 'https://instagram.com/badbhvrsystems',
   },
 };

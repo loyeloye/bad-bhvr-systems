@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://badbhvr.com/sitemap-index.xml
+Sitemap: https://bad-bhvr-systems.vercel.app/sitemap-index.xml

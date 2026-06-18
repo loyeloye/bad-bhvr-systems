@@ -4,6 +4,7 @@ import SEO from '../components/layout/SEO.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { SITE } from '../lib/utils';
 
 interface Props {
   title?: string;
@@ -32,32 +33,35 @@ const { title, description, image, article, noindex } = Astro.props;
   <SEO title={title} description={description} image={image} article={article} noindex={noindex} />
   <slot name="head" />
 
-  <!-- GA4 — replace G-XXXXXXXXXX with your Measurement ID -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script> -->
+  <!-- GA4 — set PUBLIC_GA_ID env var in Vercel to activate -->
+  {import.meta.env.PUBLIC_GA_ID && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_ID}`}></script>
+      <script define:vars={{ gaId: import.meta.env.PUBLIC_GA_ID }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaId);
+      </script>
+    </>
+  )}
 
   <!-- JSON-LD: Organization (site-wide) -->
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Bad Bhvr Systems",
-    "url": "https://badbhvr.com",
-    "logo": "https://badbhvr.com/images/logo.svg",
+    "url": Astro.site?.href ?? SITE.url,
+    "logo": `${Astro.site?.href ?? SITE.url}images/logo.svg`,
     "sameAs": [
-      "https://www.linkedin.com/company/bad-bhvr-systems",
-      "https://twitter.com/badbhvr"
+      "https://www.linkedin.com/company/bad-bhvr-systems"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+2348106981030",
       "contactType": "customer service",
       "availableLanguage": "English",
-      "areaServed": ["NG", "GH", "KE", "ZA", "AE", "GB", "US", "GB"]
+      "areaServed": ["NG", "GH", "KE", "ZA", "AE", "GB", "US"]
     },
     "address": {
       "@type": "PostalAddress",
@@ -72,7 +76,7 @@ const { title, description, image, article, noindex } = Astro.props;
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Bad Bhvr Systems",
-    "url": "https://badbhvr.com"
+    "url": Astro.site?.href ?? SITE.url
   })} />
 </head>
 <body>
