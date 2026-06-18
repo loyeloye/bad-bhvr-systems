@@ -56,3 +56,7 @@ The tools for this are available and not particularly expensive:
 The integration layer is where most businesses get stuck — not because it's technically hard, but because someone needs to design the logic, connect the tools, and test it properly.
 
 That's exactly what we do. [See how the WhatsApp lead capture system works →](/whatsapp-leads)
+
+---
+
+*Want the full technical guide? [WhatsApp-to-CRM Automation: A Practical Guide for Nigerian Businesses](/blog/whatsapp-crm-automation-nigeria) covers the exact architecture, tools, and workflows. If you're also evaluating which CRM to use, [Zoho CRM vs Dynamics 365 for African SMBs](/blog/zoho-vs-dynamics-365-african-smb) is worth reading first.*

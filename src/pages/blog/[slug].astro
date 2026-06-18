@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
-import { formatDate } from '../../lib/utils';
+import { formatDate, SITE } from '../../lib/utils';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -17,10 +17,31 @@ const d = post.data;
 ---
 
 <BaseLayout
-  title={d.metaTitle ?? `${d.title} | Bad Bhvr Systems Blog`}
+  title={d.metaTitle ?? d.title}
   description={d.metaDescription ?? d.excerpt}
+  image={d.heroImage}
   article={true}
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": d.metaTitle ?? d.title,
+    "description": d.metaDescription ?? d.excerpt,
+    "author": {
+      "@type": "Organization",
+      "name": d.author,
+      "url": SITE.url
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Bad Bhvr Systems",
+      "url": SITE.url,
+      "logo": { "@type": "ImageObject", "url": `${SITE.url}/images/logo.svg` }
+    },
+    "datePublished": d.publishDate.toISOString(),
+    "url": `${SITE.url}/blog/${post.id}`,
+    ...(d.heroImage ? { "image": `${SITE.url}${d.heroImage}` } : {})
+  })} />
   <article>
     <header class="post-header">
       <div class="container">

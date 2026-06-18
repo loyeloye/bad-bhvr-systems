@@ -12,8 +12,8 @@ outcomes:
   - "Reports that build themselves"
   - "Full process audit and documentation included"
 tools: ["n8n", "Zoho CRM", "Dynamics 365", "Google Workspace", "Apify", "WhatsApp Business API", "Meta"]
-metaTitle: "Process Automation Services — n8n & Custom Integrations | Bad Bhvr Systems"
-metaDescription: "We design and build automated workflows that remove manual work from your operations. n8n, custom integrations, and connected systems for businesses in Lagos, Africa, and EMEA."
+metaTitle: "Process Automation & n8n — Bad Bhvr Systems"
+metaDescription: "Automated workflows that remove manual work from your operations. n8n, custom integrations, and connected systems for businesses in Lagos, Africa, and EMEA."
 ---
 
 ## The work no one should be doing

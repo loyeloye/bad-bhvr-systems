@@ -12,8 +12,8 @@ outcomes:
   - "Adoption — because the CRM works for the team, not the other way around"
   - "Integration with WhatsApp, email, ads, and your reporting dashboard"
 tools: ["Zoho CRM", "Microsoft Dynamics 365", "n8n", "WhatsApp Business API"]
-metaTitle: "CRM Implementation — Zoho CRM & Dynamics 365 Setup | Bad Bhvr Systems"
-metaDescription: "CRM implementation done around how your business actually sells. Zoho CRM and Microsoft Dynamics 365 setup, migration, automation, and adoption for African and EMEA businesses."
+metaTitle: "Zoho CRM & Dynamics 365 Setup — Bad Bhvr Systems"
+metaDescription: "CRM built around how your team actually sells. Zoho CRM and Dynamics 365 setup, migration, and adoption for African and EMEA businesses."
 ---
 
 ## Why most CRM projects go wrong

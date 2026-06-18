@@ -12,7 +12,7 @@ outcomes:
   - "AI that your team uses daily — built into the tools they already open"
   - "Governance and handover: your data, your accounts, your system"
 tools: ["OpenAI GPT-4", "Claude (Anthropic)", "Gemini", "n8n AI nodes", "Custom LLM pipelines", "Apify"]
-metaTitle: "AI Integration Services — Applied AI for Business Operations | Bad Bhvr Systems"
+metaTitle: "AI Integration for Business — Bad Bhvr Systems"
 metaDescription: "Practical AI integration: customer response, lead qualification, document generation, and internal copilots. Built into your existing operations, measured in hours and revenue."
 ---
 

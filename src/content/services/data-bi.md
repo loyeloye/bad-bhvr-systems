@@ -12,8 +12,8 @@ outcomes:
   - "Problems spotted in days instead of quarters"
   - "The Monday report that builds itself, every Monday"
 tools: ["Looker Studio", "Power BI", "Metabase", "Google Analytics 4", "BigQuery", "Zoho Analytics"]
-metaTitle: "Data & Business Intelligence — Dashboards That Drive Decisions | Bad Bhvr Systems"
-metaDescription: "We turn scattered business data into one decision-grade view. Dashboards and reporting connecting CRM, ads, sales, and operations for leaders in Africa and EMEA."
+metaTitle: "Data & BI Dashboards — Bad Bhvr Systems"
+metaDescription: "One decision-grade view of your business. Dashboards connecting CRM, ads, sales, and operations for leaders in Africa and EMEA."
 ---
 
 ## The data problem most businesses have

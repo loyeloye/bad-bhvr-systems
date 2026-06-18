@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactForm from '../../components/forms/ContactForm.astro';
 import { getCollection, render } from 'astro:content';
+import { SITE } from '../../lib/utils';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -20,6 +21,28 @@ const d = service.data;
   title={d.metaTitle ?? `${d.title} | Bad Bhvr Systems`}
   description={d.metaDescription ?? d.problem}
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": d.title,
+    "description": d.metaDescription ?? d.problem,
+    "provider": {
+      "@type": "Organization",
+      "name": "Bad Bhvr Systems",
+      "url": SITE.url
+    },
+    "areaServed": ["NG", "GH", "KE", "ZA", "AE"],
+    "url": `${SITE.url}/services/${d.slug}`
+  })} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.url },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": `${SITE.url}/services` },
+      { "@type": "ListItem", "position": 3, "name": d.title, "item": `${SITE.url}/services/${d.slug}` }
+    ]
+  })} />
   <article>
     <header class="service-header">
       <div class="container">
