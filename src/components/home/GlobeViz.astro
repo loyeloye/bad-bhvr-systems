@@ -118,7 +118,8 @@
           });
         });
       })
-      .catch(() => {});
+      .then(() => { geoReady = true; bus.visible = true; })
+      .catch(() => { geoReady = true; bus.visible = true; });
 
     const stops: [string, number, number][] = [
       ['LAGOS', 6.45, 3.40],
@@ -224,14 +225,18 @@
     const q = new THREE.Quaternion();
     const up = new THREE.Vector3(), fw = new THREE.Vector3(), sd = new THREE.Vector3();
     const m4 = new THREE.Matrix4();
+    // Hide bus until globe is ready
+    bus.visible = false;
+    let geoReady = false;
     let start = performance.now();
     let revealed = false;
+    let frameCount = 0;
 
     const tick = (now: number) => {
       requestAnimationFrame(tick);
       if (document.hidden) return;
-      // Ensure correct size on first ticks (layout may not be settled yet)
       if (!revealed) resize();
+      frameCount++;
 
       const t = ((now - start) / 1000) % CYCLE;
       const leg = Math.floor(t / LEG);
@@ -256,7 +261,8 @@
       earth.quaternion.slerp(q, 0.045);
 
       renderer.render(scene, camera);
-      if (!revealed) {
+      // Only reveal after geo is loaded AND globe has had time to rotate into position
+      if (!revealed && geoReady && frameCount > 30) {
         renderer.domElement.style.opacity = '1';
         revealed = true;
       }
